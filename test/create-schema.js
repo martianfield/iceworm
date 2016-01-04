@@ -13,6 +13,5 @@ describe('Schema Creation', () => {
     };
     let schema = iceworm.createSchema(raw);
     schema.length.should.equal(3);
-    console.dir(schema);
   });
 });
