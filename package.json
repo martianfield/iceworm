@@ -23,6 +23,7 @@
   "homepage": "https://github.com/martianfield/iceworm#readme",
   "devDependencies": {
     "chai": "^3.4.1",
+    "karma": "^0.13.17",
     "mocha": "^2.3.4"
   },
   "dependencies": {
