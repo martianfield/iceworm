@@ -11,7 +11,7 @@ describe('E-Mail Validator', () => {
   });
 
   it('Invalid Format (required)', () => {
-    let schema = iceworm.parseDefinition('*email');
+    let schema = iceworm.createFieldSchema('*email');
     let emails = [
       'anne.com',
       'anne@com',
@@ -26,7 +26,7 @@ describe('E-Mail Validator', () => {
   });
 
   it('Invalid Format (not required)', () => {
-    let schema = iceworm.parseDefinition('email');
+    let schema = iceworm.createFieldSchema('email');
     iceworm.validators.email(undefined, schema).valid.should.equal(true);
     iceworm.validators.email(null, schema).valid.should.equal(true);
     iceworm.validators.email('', schema).valid.should.equal(false);

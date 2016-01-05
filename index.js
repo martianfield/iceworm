@@ -1,5 +1,5 @@
-const parseDefinition = require(__dirname + '/src/parse-definition.js');
-const createSchema = require(__dirname + '/src/create-schema.js');
+const createFieldSchema = require(__dirname + '/src/createFieldSchema.js');
+const createDocumentSchema = require(__dirname + '/src/createDocumentSchema.js');
 const validators = {
   string:require(__dirname + '/src/validators/string-validator.js'),
   int:require(__dirname + '/src/validators/int-validator.js'),
@@ -8,7 +8,7 @@ const validators = {
 };
 
 module.exports = {
-  parseDefinition: parseDefinition,
-  createSchema: createSchema,
+  createFieldSchema: createFieldSchema,
+  createDocumentSchema: createDocumentSchema,
   validators: validators
 }
