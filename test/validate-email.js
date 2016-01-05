@@ -6,10 +6,6 @@ const iceworm = require(__dirname + '/../index.js');
 
 describe('E-Mail Validator', () => {
 
-  it('Required', () => {
-
-  });
-
   it('Invalid Format (required)', () => {
     let schema = iceworm.createFieldSchema('*email');
     let emails = [
@@ -31,4 +27,5 @@ describe('E-Mail Validator', () => {
     iceworm.validators.email(null, schema).valid.should.equal(true);
     iceworm.validators.email('', schema).valid.should.equal(false);
   })
+
 });

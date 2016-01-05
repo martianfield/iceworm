@@ -27,6 +27,8 @@
     "mocha": "^2.3.4"
   },
   "dependencies": {
-    "lodash": "^3.10.1"
+    "kerberos": "0.0.17",
+    "lodash": "^3.10.1",
+    "mongodb": "^2.1.3"
   }
 }
