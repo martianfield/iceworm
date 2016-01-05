@@ -7,12 +7,12 @@ describe('Int Validator', () => {
   it("Type", () => {
     let schema = iceworm.createFieldSchema("int");
     let v_int = iceworm.validators.int(8, schema);
-    let v_float = iceworm.validators.int(13.5, schema);
+    let v_double = iceworm.validators.int(13.5, schema);
     let v_bool = iceworm.validators.int(true, schema);
     let v_string = iceworm.validators.int("some string", schema);
 
     v_int.valid.should.equal(true);
-    v_float.valid.should.equal(false);
+    v_double.valid.should.equal(false);
     v_bool.valid.should.equal(false);
     v_string.valid.should.equal(false);
   });

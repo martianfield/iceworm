@@ -60,16 +60,18 @@ The definition consist of
 - a type name, currently the following types are supported
     - string
     - int
-    - float
+    - double
     - bool
+    - objectid (Mongo ObjectID)
+    - email
 - an optional max value, indicated by `<` and a number (the meaning of max depends on the type, see below)
 - an optional min value, indicated by `>` and a number (the meaning of min depends on the type, see below)
 
 The meaning of min and max depends on the type:
 
 - `string` : maximal minimal (including) / (excluding) length of string
-- `int`, `float`: minimal (including) / maximal (excluding) value of number
-- `bool`, `email`: ignored
+- `int`, `double`: minimal (including) / maximal (excluding) value of number
+- `bool`, `email`, `objectid`: ignored
 
 
 Here a few examples:
