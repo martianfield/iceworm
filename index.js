@@ -5,7 +5,8 @@ const validators = {
   int:require(__dirname + '/src/validators/int-validator.js'),
   double:require(__dirname + '/src/validators/double-validator.js'),
   email:require(__dirname + '/src/validators/email-validator.js'),
-  objectid:require(__dirname + '/src/validators/objectid-validator.js')
+  objectid:require(__dirname + '/src/validators/objectid-validator.js'),
+  bool:require(__dirname + '/src/validators/bool-validator.js')
 };
 
 module.exports = {
