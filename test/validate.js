@@ -12,7 +12,7 @@ describe("validate()", () => {
     });
     let obj = { name:"Amy Pond", age:24};
     // act
-    let result = iceworm.validate(schema, obj);
+    let result = iceworm.validate(obj, schema);
     // assert
     result.valid.should.equal(true);
     result.errors.length.should.equal(0);
@@ -26,7 +26,7 @@ describe("validate()", () => {
     })
     let obj = { age: 18};
     // act
-    let result = iceworm.validate(schema, obj);
+    let result = iceworm.validate(obj, schema);
     // assert
     result.valid.should.equal(false);
     result.errors.length.should.equal(2);

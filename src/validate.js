@@ -2,7 +2,7 @@
 const validators = require(__dirname + '/validators.js');
 
 // TODO this method takes the schema first, the obj second ... the type validators do it the other way round ... need to consolidate this
-module.exports = (documentSchema, obj) => {
+module.exports = (obj, documentSchema) => {
   let errors = [];
 
   for(let field in documentSchema) {
