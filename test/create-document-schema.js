@@ -12,6 +12,12 @@ describe('Document Schema Creation', () => {
       married:'bool'
     };
     let schema = iceworm.createDocumentSchema(raw);
-    schema.length.should.equal(3);
+    let fieldCount = 0;
+    for(let field in schema) {
+      if(schema.hasOwnProperty(field)) {
+        fieldCount += 1;
+      }
+    }
+    fieldCount.should.equal(3);
   });
 });
