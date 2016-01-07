@@ -4,7 +4,7 @@ const should = require('chai').should();
 const expect = require('chai').expect;
 const iceworm = require(__dirname + '/../index.js');
 
-describe('Definition Parser', () => {
+describe('Field Schema Creation', () => {
   describe('Isolated', () => {
     it('Type', () => {
       iceworm.createFieldSchema('string').type.should.equal('string');
