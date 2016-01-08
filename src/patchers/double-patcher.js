@@ -1,4 +1,12 @@
+'use strict';
+
 module.exports = (obj) => {
-  // TODO implement
-  return 0;
+  if(obj === null || obj === undefined) {
+    return obj;
+  }
+  let parsed = parseFloat(obj);
+  if(isNaN(parsed)) {
+    return undefined;
+  }
+  return parsed;
 }

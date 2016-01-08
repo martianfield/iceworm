@@ -1,4 +1,6 @@
 module.exports = (obj) => {
-  // TODO implement
-  return "a@a.com";
+  if(obj === null || obj === undefined) {
+    return obj;
+  }
+  return String(obj);
 }

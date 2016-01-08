@@ -1,4 +1,3 @@
-// TODO currently this validator depends on mongodb.js, ideally this should not be necessary
 'use strict';
 const ObjectID = require('mongodb').ObjectID;
 

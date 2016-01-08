@@ -136,15 +136,13 @@ let result = iceworm.patch(obj, schema);
 let patched = result.obj;
 ```
 
-A 'patched' version means that possible type conversion have been executed. E.g. if your schema calls for a string but a number was supplied, the patched version is of type string.
+A 'patched' version means that possible type conversions have been executed. E.g. if your schema calls for a string but a number was supplied, the patched version is of type string.
 
-If the source object contains `null` or `undefined` values, the patched version follows the following scheme:
+If the source object contains `null` or `undefined` values, the patched version makes no assumption about your use of those values. I.e. it will not change such values; it is up to you to decide what to do with them.
 
-| Type       | `undefined` | `null`      |
-|------------|-------------|-------------|
-| `string`   | `''`        | `''`        |
-| `int`      | `0`         | `0`         |
-| `double`   | `0`         | `0`         |
-| `bool`     | `false`     | `false`     | 
-| `email`    | `undefined` | `undefined` |
-| `objectid` | `undefined` | `undefined` |
+Notes:
+
+- the `int` and `double` types are patched to `undefined` is the provided value cannot be convert to a numeric value.
+- floating point values in an `int` field are floored
+- patching `email` fields only converts the given value into a string, since no more sensible patching can be done.
+- patching `objectid` expects a valid 24 byte hex string as the passed object. If this value is not valid, the patched value is set to `undefined`
