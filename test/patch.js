@@ -35,4 +35,14 @@ describe("Patching", () => {
     });
   });
 
+  describe("bool patching", () => {
+    it("undefined / null", () => {
+      // arrange / act
+      let result_undefined = iceworm.patch.bool(undefined);
+      let result_null = iceworm.patch.bool(null);
+      // assert
+      result_undefined.should.equal(false);
+      result_null.should.equal(false);
+    })
+  })
 })

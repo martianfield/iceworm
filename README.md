@@ -33,7 +33,7 @@ var obj = {
 var result = iceworm.exec(obj, schema);
 
 if(result.isValid) {
-    console.dir(result.object)
+    console.dir(result.obj)
 } 
 else {
     result.errors.forEach((error) => {
@@ -58,12 +58,12 @@ The definition consist of
 
 - indicator if the field is required ... if required, put an asterisk `*` at the beginning
 - a type name, currently the following types are supported
-    - string
-    - int
-    - double
-    - bool
-    - objectid (Mongo ObjectID)
-    - email
+    - `string`
+    - `int`
+    - `double`
+    - `bool`
+    - `objectid` (Mongo ObjectID)
+    - `email`
 - an optional max value, indicated by `<` and a number (the meaning of max depends on the type, see below)
 - an optional min value, indicated by `>` and a number (the meaning of min depends on the type, see below)
 
@@ -99,7 +99,7 @@ Here an example:
 ```json
 {
     valid: true,
-    object: {
+    obj: {
         name: 'Amy Pond',
         age: 1,
         scottish: true
@@ -127,3 +127,24 @@ A note on the errors array:
         - `'format'` - the value was not formatted correctly (e.g. invalid email address)
 
 
+## Patching
+
+Calling `exec(<obj>,<schema>)` will return a result containing a 'patched' version of the object you passed:
+
+```javascript
+let result = iceworm.patch(obj, schema);
+let patched = result.obj;
+```
+
+A 'patched' version means that possible type conversion have been executed. E.g. if your schema calls for a string but a number was supplied, the patched version is of type string.
+
+If the source object contains `null` or `undefined` values, the patched version follows the following scheme:
+
+| Type       | `undefined` | `null`      |
+|------------|-------------|-------------|
+| `string`   | `''`        | `''`        |
+| `int`      | `0`         | `0`         |
+| `double`   | `0`         | `0`         |
+| `bool`     | `false`     | `false`     | 
+| `email`    | `undefined` | `undefined` |
+| `objectid` | `undefined` | `undefined` |
