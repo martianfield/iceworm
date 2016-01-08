@@ -4,7 +4,7 @@ const should = require('chai').should();
 
 
 describe("validate()", () => {
-  it("A", () => {
+  it("Valid result", () => {
     // arrange
     let schema = iceworm.createDocumentSchema({
       name:"*string",
@@ -18,17 +18,32 @@ describe("validate()", () => {
     result.errors.length.should.equal(0);
   });
 
-  it("B", () => {
+  it("Invalid result", () => {
     // arrange
     let schema = iceworm.createDocumentSchema({
       name:"*string",
       age:"int>20"
-    })
+    });
     let obj = { age: 18};
     // act
     let result = iceworm.validate(obj, schema);
     // assert
     result.valid.should.equal(false);
     result.errors.length.should.equal(2);
+  });
+
+  it('Invalid result (field name in error)', () => {
+    // arrange
+    let schema = iceworm.createDocumentSchema({
+      name:'*string',
+      age:'int>20'
+    });
+    let obj = { name: "Amy", age:18 }; // field 'age' is not valid
+    // act
+    let result = iceworm.validate(obj, schema);
+    // assert
+    result.valid.should.equal(false);
+    result.errors.length.should.equal(1);
+    result.errors[0].field.should.equal('age');
   });
 });

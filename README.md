@@ -30,7 +30,7 @@ var obj = {
     email: "test@test.com"
 }
 
-var result = iceworm.exec(schema, obj);
+var result = iceworm.exec(obj, schema);
 
 if(result.isValid) {
     console.dir(result.object)
@@ -85,3 +85,45 @@ Here a few examples:
 { middleName: 'string>3' }
 ```
     
+
+## Execution result
+
+The `exec(<obj>, <schema>)` function returns an object containing 
+
+- the validation result (`true` or `false`)
+- a patched version of the object passed
+- an array of errors (if any)
+
+Here an example:
+
+```json
+{
+    valid: true,
+    object: {
+        name: 'Amy Pond',
+        age: 1,
+        scottish: true
+    },
+    errors: [
+        { 
+            field: 'age',
+            errors: [
+                { message: 'value is too small', reason: 'min' }
+            ]
+        }
+    ]
+```
+
+A note on the errors array:
+
+- each item has a `field` and an `errors` property
+- the `field` property tells you what field caused the error (use this to indicate the corresponding UI element, for instance)
+- the `errors` property contains yet another array of errors (a field may have more than one error). Each error at this level has
+    - a `message` (this is mainly meant as a feedback for you, the developer)
+    - a `reason` ... possible reasons are:
+        - `'required'` - the value was required, but not provided
+        - `'min'` - the value did not fulfill the minimal length / amount criterion
+        - `'max'` - the value did not fulfill the maximal length / amount criterion
+        - `'format'` - the value was not formatted correctly (e.g. invalid email address)
+
+
