@@ -10,6 +10,14 @@ describe('Field Schema Creation', () => {
       iceworm.createFieldSchema('string').type.should.equal('string');
       iceworm.createFieldSchema('STRING').type.should.equal('string');
     });
+    it('Type with namespace', () => {
+      let s_without_ns = iceworm.createFieldSchema('string');
+      let s_with_ns = iceworm.createFieldSchema('something.string');
+      expect(s_without_ns.namespace).to.equal(undefined);
+      s_without_ns.type.should.equal('string');
+      expect(s_with_ns.namespace).to.equal('something');
+      s_with_ns.type.should.equal('string');
+    });
     it('Required', () => {
       iceworm.createFieldSchema('*type[]').required.should.equal(true);
       iceworm.createFieldSchema('type[]').required.should.equal(false);
