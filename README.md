@@ -149,3 +149,36 @@ Notes:
 - the `int` and `float` types are patched to `undefined` is the provided value cannot be convert to a numeric value.
 - floating point values in an `int` field are floored
 - patching `email` fields only converts the given value into a string, since no more sensible patching can be done.
+
+
+## Extensions
+
+Extensions increase the number of supported types. One example is [iceworm-mongo](https://github.com/martianfield/iceworm-mongo) which extends Iceworm with a handful of MongoDB specific types.
+
+
+### Using extensions
+
+Each extension you use is assigned a namespace. To do so, use Iceworm's `extend(<namespace>, <extension>)` method. Make sure you have `iceworm-mongo` installed to follow the example:
+
+```javascript
+const iceworm_mongo = require('iceworm-mongo');
+const iceworm = require('iceworm');
+
+iceworm.use('mongo', iceworm_mongo);
+```
+
+We then use the namespace we assigned (in our example `'mongo'`) when defining our schema:
+
+```javascript
+// our schema has a standard field (no namespace) and a iceworm-mongo field (with namespace)
+const schema = {
+    name:'*string',
+    city_id:'mongo.objectid'
+}
+```
+
+
+### Writing Extensions
+
+TODO
+
