@@ -1,8 +1,8 @@
 # Iceworm
 
-A lightweight object mapping and validation library.
+A lightweight object validation and patching library.
 
-## Getting started
+## Quickstart
 
 Install iceworm using npm:
 
@@ -10,13 +10,14 @@ Install iceworm using npm:
 npm install iceworm --save
 ``` 
 
-Iceworm lets you quickly define schemas and validate objects against them.
+Iceworm lets you quickly define schemas and validate objects against them. It also returns a 'patched' version of the object (see below).
 
 Here an example:
 
 ```javascript
 const iceworm = require('iceworm');
 
+// define the schema
 let schema = {
     firstName: '*string>3',
     userName: '*string>10<60',
@@ -24,13 +25,15 @@ let schema = {
     email: 'email'
 }
 
+// the object to be evaluated ... this could be a POST body, for instance
 var obj = {
     firstName: "Martin",
     userName: "martianfield",
     email: "test@test.com"
 }
 
-var result = iceworm.exec(obj, schema);
+// evaluate
+var result = iceworm.evaluate(obj, schema);
 
 if(result.isValid) {
     console.dir(result.obj)
@@ -85,24 +88,20 @@ Here a few examples:
 ```
     
 
-## Execution result
+## Evaluation Result
 
-The `exec(<obj>, <schema>)` function returns an object containing 
+The `evaluate(<obj>, <schema>)` function returns an object containing 
 
 - the validation result (`true` or `false`)
-- a patched version of the object passed
-- an array of errors (if any)
+- an array of validation errors (if any)
+- a patched version of the object passed (see the note about Patching further down)
+
 
 Here an example:
 
 ```json
 {
     valid: true,
-    obj: {
-        name: 'Amy Pond',
-        age: 1,
-        scottish: true
-    },
     errors: [
         { 
             field: 'age',
@@ -110,7 +109,12 @@ Here an example:
                 { message: 'value is too small', reason: 'min' }
             ]
         }
-    ]
+    ],
+    obj: {
+        name: 'Amy Pond',
+        age: 1,
+        scottish: true
+    }
 ```
 
 A note on the errors array:
@@ -128,7 +132,7 @@ A note on the errors array:
 
 ## Patching
 
-Calling `exec(<obj>,<schema>)` will return a result containing a 'patched' version of the object you passed:
+Calling `evaluate(<obj>,<schema>)` will return a result containing a 'patched' version of the object you passed:
 
 ```javascript
 let result = iceworm.patch(obj, schema);
