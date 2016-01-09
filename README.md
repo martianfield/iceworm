@@ -60,9 +60,8 @@ The definition consist of
 - a type name, currently the following types are supported
     - `string`
     - `int`
-    - `double`
+    - `float`
     - `bool`
-    - `objectid` (Mongo ObjectID)
     - `email`
 - an optional max value, indicated by `<` and a number (the meaning of max depends on the type, see below)
 - an optional min value, indicated by `>` and a number (the meaning of min depends on the type, see below)
@@ -142,7 +141,6 @@ If the source object contains `null` or `undefined` values, the patched version 
 
 Notes:
 
-- the `int` and `double` types are patched to `undefined` is the provided value cannot be convert to a numeric value.
+- the `int` and `float` types are patched to `undefined` is the provided value cannot be convert to a numeric value.
 - floating point values in an `int` field are floored
 - patching `email` fields only converts the given value into a string, since no more sensible patching can be done.
-- patching `objectid` expects a valid 24 byte hex string as the passed object. If this value is not valid, the patched value is set to `undefined`

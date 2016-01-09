@@ -55,26 +55,6 @@ describe("Patching", () => {
     });
   });
 
-  describe("double patching", () => {
-    it("undefined / null", () => {
-      expect(iceworm.patchers.double(undefined)).to.equal(undefined);
-      expect(iceworm.patchers.double(null)).to.equal(null);
-    });
-    it("NaN", () => {
-      expect(iceworm.patchers.double("something")).to.equal(undefined);
-    });
-    it("a number", () => {
-      let result = iceworm.patchers.double(1);
-      result.should.equal(1);
-      expect(result).to.be.a('number');
-    });
-    it("a numeric string", () => {
-      let result = iceworm.patchers.double("1.8");
-      result.should.equal(1.8);
-      expect(result).to.be.a('number');
-    });
-  });
-
   describe("float patching", () => {
     it("undefined / null", () => {
       expect(iceworm.patchers.float(undefined)).to.equal(undefined);
@@ -139,21 +119,6 @@ describe("Patching", () => {
       expect(result_false).to.be.a('string');
       result_true.should.equal('true');
       result_false.should.equal('false');
-    });
-  });
-
-  describe("objectid patching", () => {
-    it("undefined / null", () => {
-      expect(iceworm.patchers.objectid(undefined)).to.equal(undefined);
-      expect(iceworm.patchers.objectid(null)).to.equal(null);
-    });
-    it("valid hex string", () => {
-      let result = iceworm.patchers.objectid("5683b9b108c91955203b0c7c");
-      expect(result).to.not.equal(undefined);
-      (result instanceof ObjectID).should.equal(true);
-    });
-    it("invalid hex string", () => {
-      expect(iceworm.patchers.objectid("just something")).to.equal(undefined);
     });
   });
 
