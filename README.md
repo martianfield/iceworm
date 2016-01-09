@@ -72,8 +72,8 @@ The definition consist of
 The meaning of min and max depends on the type:
 
 - `string` : maximal minimal (including) / (excluding) length of string
-- `int`, `double`: minimal (including) / maximal (excluding) value of number
-- `bool`, `email`, `objectid`: ignored
+- `int`, `float`: minimal (including) / maximal (excluding) value of number
+- `bool`, `email`: ignored
 
 
 Here a few examples:
@@ -125,6 +125,7 @@ A note on the errors array:
     - a `message` (this is mainly meant as a feedback for you, the developer)
     - a `reason` ... possible reasons are:
         - `'required'` - the value was required, but not provided
+        - `'type'` - the value was not of the expected type (e.g. a non-numeric string in an int field)
         - `'min'` - the value did not fulfill the minimal length / amount criterion
         - `'max'` - the value did not fulfill the maximal length / amount criterion
         - `'format'` - the value was not formatted correctly (e.g. invalid email address)
