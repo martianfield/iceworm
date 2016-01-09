@@ -75,6 +75,26 @@ describe("Patching", () => {
     });
   });
 
+  describe("float patching", () => {
+    it("undefined / null", () => {
+      expect(iceworm.patchers.float(undefined)).to.equal(undefined);
+      expect(iceworm.patchers.float(null)).to.equal(null);
+    });
+    it("NaN", () => {
+      expect(iceworm.patchers.float("something")).to.equal(undefined);
+    });
+    it("a number", () => {
+      let result = iceworm.patchers.float(1);
+      result.should.equal(1);
+      expect(result).to.be.a('number');
+    });
+    it("a numeric string", () => {
+      let result = iceworm.patchers.float("1.8");
+      result.should.equal(1.8);
+      expect(result).to.be.a('number');
+    });
+  });
+
   describe("int patching", () => {
     it("undefined / null", () => {
       expect(iceworm.patchers.int(undefined)).to.equal(undefined);
