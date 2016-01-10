@@ -7,9 +7,9 @@ module.exports = (obj, documentSchema) => {
 
   let test = extensions;
 
-  for(let field in documentSchema) {
-    if(documentSchema.hasOwnProperty(field)) {
-      let fieldSchema = documentSchema[field];
+  for(let field in documentSchema.fields) {
+    if(documentSchema.fields.hasOwnProperty(field)) {
+      let fieldSchema = documentSchema.fields[field];
       let validator = undefined;
       if(fieldSchema.namespace === undefined) {
         validator = validators[fieldSchema.type]; // TODO if there is no validator of that type, we need to push an error

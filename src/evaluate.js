@@ -1,11 +1,11 @@
 'use strict';
 
-const createDocumentSchema = require(__dirname + '/createDocumentSchema.js');
+const Schema = require(__dirname + '/schema.js');
 const validate = require(__dirname + '/validate.js');
 const patch = require(__dirname + '/patch.js');
 
 module.exports = (obj, rawDocumentSchema) => {
-  let documentSchema = createDocumentSchema(rawDocumentSchema);
+  let documentSchema = Schema.create(rawDocumentSchema);
   let validationResult = validate(obj, documentSchema);
   let patchingResult = patch(obj, documentSchema);
 

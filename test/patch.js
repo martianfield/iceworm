@@ -123,7 +123,7 @@ describe("Patching", () => {
 
   it("patch()",  () => {
     // arrange
-    let docSchema = iceworm.createDocumentSchema({
+    let docSchema = iceworm.Schema.create({
       name:'string',
       email:'email',
       age:'int',

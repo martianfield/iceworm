@@ -32,24 +32,3 @@ describe("Evaluating", () => {
     result.obj.scottish.should.equal(obj.scottish);
   })
 });
-
-
-/*
- // arrange
- let docSchema = iceworm.createDocumentSchema();
- let obj = {
- name: 'Amy',
- email: 'amy@pond.com',
- age: 24,
- height: 1.71,
- scottish: true
- }
- // act
- let patched = iceworm.patch(obj, docSchema);
- // assert
- patched.name.should.equal(obj.name);
- patched.email.should.equal(obj.email);
- patched.age.should.equal(obj.age);
- patched.height.should.equal(obj.height);
- patched.scottish.should.equal(obj.scottish);
- */

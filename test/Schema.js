@@ -1,8 +1,8 @@
 'use strict';
-const _ = require('lodash');
 const should = require('chai').should();
 const expect = require('chai').expect;
 const iceworm = require(__dirname + '/../index.js');
+const Schema = iceworm.Schema;
 
 describe('Document Schema Creation', () => {
   it('Fields count', () => {
@@ -11,10 +11,10 @@ describe('Document Schema Creation', () => {
       age:'int',
       married:'bool'
     };
-    let schema = iceworm.createDocumentSchema(raw);
+    let schema = Schema.create(raw);
     let fieldCount = 0;
-    for(let field in schema) {
-      if(schema.hasOwnProperty(field)) {
+    for(let field in schema.fields) {
+      if(schema.fields.hasOwnProperty(field)) {
         fieldCount += 1;
       }
     }

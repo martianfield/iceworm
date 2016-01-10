@@ -6,7 +6,7 @@ const should = require('chai').should();
 describe("validate()", () => {
   it("Valid result", () => {
     // arrange
-    let schema = iceworm.createDocumentSchema({
+    let schema = iceworm.Schema.create({
       name:"*string",
       age:"int>0"
     });
@@ -20,7 +20,7 @@ describe("validate()", () => {
 
   it("Invalid result", () => {
     // arrange
-    let schema = iceworm.createDocumentSchema({
+    let schema = iceworm.Schema.create({
       name:"*string",
       age:"int>20"
     });
@@ -34,7 +34,7 @@ describe("validate()", () => {
 
   it('Invalid result (field name in error)', () => {
     // arrange
-    let schema = iceworm.createDocumentSchema({
+    let schema = iceworm.Schema.create({
       name:'*string',
       age:'int>20'
     });

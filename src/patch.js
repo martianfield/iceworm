@@ -6,13 +6,13 @@ const extensions = require(__dirname + '/extensions.js');
 module.exports = (obj, documentSchema) => {
   let output = {};
 
-  for(let field in documentSchema) {
-    if(documentSchema.hasOwnProperty(field)) {
+  for(let field in documentSchema.fields) {
+    if(documentSchema.fields.hasOwnProperty(field)) {
       if(!obj.hasOwnProperty(field)) {
         output[field] = undefined;
       }
       else {
-        let fieldSchema = documentSchema[field];
+        let fieldSchema = documentSchema.fields[field];
         if(fieldSchema.namespace === undefined) {
           output[field] = patchers[fieldSchema.type](obj[field]);
         }
