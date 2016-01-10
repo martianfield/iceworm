@@ -2,10 +2,11 @@
 const should = require('chai').should();
 const expect = require('chai').expect;
 const iceworm = require(__dirname + '/../index.js');
+const FieldInfo = iceworm.FieldInfo;
 
 describe('Float Validator', () => {
   it("Type", () => {
-    let schema = iceworm.createFieldSchema("float");
+    let schema = FieldInfo.create('', "float");
     let v_float = iceworm.validators.float(13.5, schema);
     let v_int = iceworm.validators.float(8, schema);
     let v_bool = iceworm.validators.float(true, schema);
@@ -17,21 +18,21 @@ describe('Float Validator', () => {
     v_string.valid.should.equal(false);
   });
   it('Required', () => {
-    let schema = iceworm.createFieldSchema("*float");
+    let schema = FieldInfo.create('', "*float");
     let validation = iceworm.validators.float(undefined, schema);
     validation.valid.should.equal(false);
     validation.errors.length.should.equal(1);
     validation.errors[0].reason.should.equal("required");
   });
   it("Min", () => {
-    let schema = iceworm.createFieldSchema("float>10");
+    let schema = FieldInfo.create('', "float>10");
     let validation = iceworm.validators.float(9, schema);
     validation.valid.should.equal(false);
     validation.errors.length.should.equal(1);
     validation.errors[0].reason.should.equal("min");
   });
   it("Max", () => {
-    let schema = iceworm.createFieldSchema("float<10");
+    let schema = FieldInfo.create('', "float<10");
     let validation = iceworm.validators.float(10, schema);
     validation.valid.should.equal(false);
     validation.errors.length.should.equal(1);

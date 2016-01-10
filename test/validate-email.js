@@ -3,11 +3,12 @@ const _ = require('lodash');
 const should = require('chai').should();
 const expect = require('chai').expect;
 const iceworm = require(__dirname + '/../index.js');
+const FieldInfo = iceworm.FieldInfo;
 
 describe('E-Mail Validator', () => {
 
   it('Invalid Format (required)', () => {
-    let schema = iceworm.createFieldSchema('*email');
+    let schema = FieldInfo.create('', '*email');
     let emails = [
       'anne.com',
       'anne@com',
@@ -22,7 +23,7 @@ describe('E-Mail Validator', () => {
   });
 
   it('Invalid Format (not required)', () => {
-    let schema = iceworm.createFieldSchema('email');
+    let schema = FieldInfo.create('', 'email');
     iceworm.validators.email(undefined, schema).valid.should.equal(true);
     iceworm.validators.email(null, schema).valid.should.equal(true);
     iceworm.validators.email('', schema).valid.should.equal(false);
