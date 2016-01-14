@@ -2,38 +2,52 @@
 const _ = require('lodash');
 
 class FieldInfo {
-  constructor(name, namespace, type, required, min, max) {
-    this.name = name;
-    this.namespace = namespace;
-    this.type = type;
-    this.required = required;
-    this.min = min;
-    this.max = max;
+  constructor() {
+    this.name = undefined
+    this.namespace = undefined
+    this.type = undefined
+    this.required = false
+    this.hidden = false
+    this.min = undefined
+    this.max = undefined
   }
 
   static create(name, definition) {
+    let re, matches
+    let fi = new FieldInfo();
+
     if(definition === undefined) {
       definition = "";
     }
-    let namespace, type, required, min, max, re, matches = undefined;
 
+    let prefix_count = 0;
     // required
-    required = _.startsWith(definition, '*');
+    if( _.startsWith(definition, '*', 0) || _.startsWith(definition, '*', 1)) {
+      prefix_count += 1;
+      fi.required = true;
+    }
+    // hidden
+    if( _.startsWith(definition, '-', 0) || _.startsWith(definition, '-', 1)) {
+      prefix_count += 1;
+      fi.hidden = true;
+    }
+
+    // remove prefixes
+    if(prefix_count > 0) {
+      definition = definition.substring(prefix_count);
+    }
 
     // type and namespace
-    if(_.startsWith(definition, '*')) {
-      definition = _.trimLeft(definition, '*');
-    }
     re = /[a-zA-z.]*/;
     matches = re.exec(definition);
     if(matches !== null) {
       let t_and_s = matches[0].toLowerCase().split('.');
       if(t_and_s.length > 1) {
-        namespace = t_and_s[0];
-        type = t_and_s[1];
+        fi.namespace = t_and_s[0];
+        fi.type = t_and_s[1];
       }
       else {
-        type = t_and_s[0];
+        fi.type = t_and_s[0];
       }
     }
 
@@ -41,20 +55,21 @@ class FieldInfo {
     re = />[0-9]*/;
     matches = re.exec(definition);
     if(matches !== null) {
-      min = Number(_.trimLeft(matches[0], '>'));
+      fi.min = Number(_.trimLeft(matches[0], '>'));
     }
 
     // max
     re = /<[0-9]*/;
     matches = re.exec(definition);
     if(matches !== null) {
-      max = Number(_.trimLeft(matches[0], '<'));
+      fi.max = Number(_.trimLeft(matches[0], '<'));
     }
 
     // done
-    return new FieldInfo(name, namespace, type, required, min, max);
+    return fi;
   }
 }
 
 // exports
 module.exports = FieldInfo;
+
