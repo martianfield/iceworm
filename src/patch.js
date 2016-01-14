@@ -7,18 +7,20 @@ module.exports = (obj, documentSchema) => {
   let output = {};
 
   for(let field in documentSchema.fields) {
+    let fieldSchema = documentSchema.fields[field];
     if(documentSchema.fields.hasOwnProperty(field)) {
-      if(!obj.hasOwnProperty(field)) {
-        output[field] = undefined;
-      }
-      else {
-        let fieldSchema = documentSchema.fields[field];
-        if(fieldSchema.namespace === undefined) {
-          output[field] = patchers[fieldSchema.type](obj[field]);
+      if(!fieldSchema.hidden) {
+        if(!obj.hasOwnProperty(field)) {
+          output[field] = undefined;
         }
         else {
-          output[field] = extensions[fieldSchema.namespace]
-            .patchers[fieldSchema.type](obj[field]);
+          if(fieldSchema.namespace === undefined) {
+            output[field] = patchers[fieldSchema.type](obj[field]);
+          }
+          else {
+            output[field] = extensions[fieldSchema.namespace]
+              .patchers[fieldSchema.type](obj[field]);
+          }
         }
       }
     }

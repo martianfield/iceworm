@@ -147,4 +147,20 @@ describe("Patching", () => {
     patched.scottish.should.equal(obj.scottish);
   })
 
+  it("patch() with hidden fields", () => {
+    // arrange
+    let schema = iceworm.Schema.create({
+      name:'string',
+      age:'-int'
+    })
+    let obj = {
+      name:'Amy',
+      age: 24
+    }
+    // act
+    let patched = iceworm.patch(obj, schema);
+    // assert
+    patched.hasOwnProperty('age').should.equal(false);
+  })
+
 })
