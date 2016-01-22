@@ -1,5 +1,7 @@
 'use strict';
-const _ = require('lodash');
+const validators = require(__dirname + '/validators.js')
+const extensions = require(__dirname + '/extensions.js')
+const _ = require('lodash')
 
 class FieldInfo {
   constructor() {
@@ -11,6 +13,18 @@ class FieldInfo {
     this.hidden = false
     this.min = undefined
     this.max = undefined
+  }
+
+  validator() {
+    let validator = undefined;
+    if(this.namespace === undefined) {
+      validator = validators[this.type]; // TODO if there is no validator of that type, we need to push an error
+    }
+    else {
+      validator = extensions[this.namespace]
+        .validators[this.type]; // TODO if there is no extension of that namespace or validator of that type, we need to push an error
+    }
+    return validator
   }
 
   static create(name, definition) {

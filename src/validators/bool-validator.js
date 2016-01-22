@@ -11,7 +11,7 @@ module.exports = (value, fieldSchema) => {
       Boolean(value);
     }
     catch(err) {
-      errors.push({message:err.message, reason:"format"});
+      errors.push({message:err.message, reason:"type"});
     }
   }
   // and return the result
