@@ -60,6 +60,7 @@ let schema = {
 The definition consist of
 
 - indicator if the field is required ... if required, put an asterisk `*` at the beginning
+- indicator if the field is projected ... if not projected, prefix with `-`
 - a type name, currently the following types are supported
     - `string`
     - `int`
@@ -81,6 +82,8 @@ Here a few examples:
 ```javascript
 // a required string with minimal length of 10 characters and maximal length of 64 characters:
 { firstName: '*string>10<65' }
+// a required string that is not projected
+{ middleName: '*-string' }
 // an optional integer with a maximal value of 100. Note: max is excluding the value
 { age: 'int<101' }
 // an optional string of minimal length of 3 characters: Note: min is including the value
@@ -140,15 +143,18 @@ let result = iceworm.patch(obj, schema);
 let patched = result.obj;
 ```
 
-A 'patched' version means that possible type conversions have been executed. E.g. if your schema calls for a string but a number was supplied, the patched version is of type string.
+A 'patched' version means that 
 
-If the source object contains `null` or `undefined` values, the patched version makes no assumption about your use of those values. I.e. it will not change such values; it is up to you to decide what to do with them.
+- possible type conversions have been executed. E.g. if your schema calls for a string but a number was supplied, the patched version is of type string
+- hidden fields are not projected. E.g. if you have a field `'{'middleName':'-string'}` it will not be contained in the patched object
+
 
 Notes:
 
-- the `int` and `float` types are patched to `undefined` is the provided value cannot be convert to a numeric value.
+- if the source object contains `null` or `undefined` values, the patched version makes no assumption about your use of those values. I.e. it will not change such values; it is up to you to decide what to do with them.
+- the `int` and `float` types are patched to `undefined` if the provided value cannot be converted to a numeric value
 - floating point values in an `int` field are floored
-- patching `email` fields only converts the given value into a string, since no more sensible patching can be done.
+- patching `email` fields only converts the given value into a string, since no more sensible patching can be done
 
 
 ## Extensions
