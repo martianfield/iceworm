@@ -1,5 +1,7 @@
 'use strict';
+
 const validators = require(__dirname + '/validators.js')
+const patchers = require(__dirname + '/patchers.js')
 const extensions = require(__dirname + '/extensions.js')
 const _ = require('lodash')
 
@@ -16,7 +18,7 @@ class FieldInfo {
   }
 
   validator() {
-    let validator = undefined;
+    let validator = undefined
     if(this.namespace === undefined) {
       validator = validators[this.type]; // TODO if there is no validator of that type, we need to push an error
     }
@@ -25,6 +27,20 @@ class FieldInfo {
         .validators[this.type]; // TODO if there is no extension of that namespace or validator of that type, we need to push an error
     }
     return validator
+  }
+
+  patcher() {
+    let patcher = undefined
+
+    if(this.namespace === undefined) {
+      patcher = patchers[this.type]
+    }
+    else {
+      patcher = extensions[this.namespace]
+        .patchers[this.type]
+    }
+
+    return patcher
   }
 
   static create(name, definition) {

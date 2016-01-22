@@ -158,6 +158,7 @@ Notes:
 - the `int` and `float` types are patched to `undefined` if the provided value cannot be converted to a numeric value
 - floating point values in an `int` field are floored
 - patching `email` fields only converts the given value into a string, since no more sensible patching can be done
+- patching array fields will return in an empty array if the supplied value is not an array
 
 
 ## Extensions
@@ -187,7 +188,11 @@ const schema = {
 ```
 
 
-### Writing Extensions
+## Roadmap
 
-TODO
+- nested documents
 
+
+
+
+// TODO 'Writing Extensions'

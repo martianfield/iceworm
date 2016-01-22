@@ -158,9 +158,24 @@ describe("Patching", () => {
       age: 24
     }
     // act
-    let patched = iceworm.patch(obj, schema);
+    let patched = iceworm.patch(obj, schema)
     // assert
-    patched.hasOwnProperty('age').should.equal(false);
+    patched.hasOwnProperty('age').should.equal(false)
+  })
+
+  it("patch() with array", () => {
+    // arrange
+    let schema = iceworm.Schema.create({
+      name:'string',
+      grades:'int[]'
+    })
+    let obj = {
+      name: 'Amy',
+      grades: [1, 2, 4, 8, 16]
+    }
+    // act
+    let patched = iceworm.patch(obj, schema)
+    patched.grades.should.deep.equal([1, 2, 4, 8, 16])
   })
 
 })
