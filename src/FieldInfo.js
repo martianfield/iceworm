@@ -6,6 +6,7 @@ class FieldInfo {
     this.name = undefined
     this.namespace = undefined
     this.type = undefined
+    this.array = false
     this.required = false
     this.hidden = false
     this.min = undefined
@@ -38,8 +39,9 @@ class FieldInfo {
     }
 
     // type and namespace
-    re = /[a-zA-z.]*/;
-    matches = re.exec(definition);
+    // re = /[a-zA-z\.]*/
+    re = /[a-z\.]*/i
+    matches = re.exec(definition)
     if(matches !== null) {
       let t_and_s = matches[0].toLowerCase().split('.');
       if(t_and_s.length > 1) {
@@ -49,6 +51,13 @@ class FieldInfo {
       else {
         fi.type = t_and_s[0];
       }
+    }
+
+    // array
+    re = /^[(\*\-)(a-zA-Z)]*(\[\])/
+    matches = re.exec(definition)
+    if(matches !== null) {
+      fi.array = true
     }
 
     // min

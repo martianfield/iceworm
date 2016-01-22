@@ -16,7 +16,7 @@ describe("validate()", () => {
     // assert
     result.valid.should.equal(true);
     result.errors.length.should.equal(0);
-  });
+  })
 
   it("Invalid result", () => {
     // arrange
@@ -30,7 +30,7 @@ describe("validate()", () => {
     // assert
     result.valid.should.equal(false);
     result.errors.length.should.equal(2);
-  });
+  })
 
   it('Invalid result (field name in error)', () => {
     // arrange
@@ -45,5 +45,5 @@ describe("validate()", () => {
     result.valid.should.equal(false);
     result.errors.length.should.equal(1);
     result.errors[0].field.should.equal('age');
-  });
-});
+  })
+})

@@ -67,6 +67,7 @@ The definition consist of
     - `float`
     - `bool`
     - `email`
+- arrays are indicated by following the type name by `[]`
 - an optional max value, indicated by `<` and a number (the meaning of max depends on the type, see below)
 - an optional min value, indicated by `>` and a number (the meaning of min depends on the type, see below)
 
@@ -88,6 +89,8 @@ Here a few examples:
 { age: 'int<101' }
 // an optional string of minimal length of 3 characters: Note: min is including the value
 { middleName: 'string>3' }
+// an array of strings
+{ tags: 'string[]' }
 ```
     
 
