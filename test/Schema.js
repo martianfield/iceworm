@@ -18,6 +18,9 @@ describe('Document Schema Creation', () => {
         fieldCount += 1;
       }
     }
+    expect(schema.fields['name'].name).to.equal('name')
+    expect(schema.fields['age'].name).to.equal('age')
+    expect(schema.fields['married'].name).to.equal('married')
     fieldCount.should.equal(3)
   })
 

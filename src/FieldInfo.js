@@ -51,13 +51,16 @@ class FieldInfo {
       definition = "";
     }
 
+    // name
+    fi.name = name
+
+    // required / hidden
     let prefix_count = 0;
-    // required
+
     if( _.startsWith(definition, '*', 0) || _.startsWith(definition, '*', 1)) {
       prefix_count += 1;
       fi.required = true;
     }
-    // hidden
     if( _.startsWith(definition, '-', 0) || _.startsWith(definition, '-', 1)) {
       prefix_count += 1;
       fi.hidden = true;

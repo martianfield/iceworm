@@ -9,6 +9,11 @@ describe("FieldInfo", () => {
   let fi
 
   describe("create()", () => {
+
+    it('Name', () => {
+      expect(FieldInfo.create('name', 'string').name).to.equal('name')
+    })
+
     it('Type', () => {
       FieldInfo.create('name', 'string').type.should.equal('string');
       FieldInfo.create('name', 'STRING').type.should.equal('string');
