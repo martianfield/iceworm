@@ -21,16 +21,21 @@ describe('Document Schema Creation', () => {
     fieldCount.should.equal(3)
   })
 
-  /*
   it('Options', () => {
     // arrange
     let raw = { name: '*string' }
-    let collection = 'companions'
+    let options = {
+      collection: 'companions',
+      names: [
+        'Amy',
+        'Rose',
+        'Donna'
+      ]
+    }
     // act
-    let schema = Schema.create(raw, collection)
+    let schema = Schema.create(raw, options)
     // assert
-    schema.collection.should.equal('companions')
+    schema.options.should.deep.equal(options)
 
   })
-  */
 })

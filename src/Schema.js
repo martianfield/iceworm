@@ -10,14 +10,14 @@ module.exports = class Schema {
     this.__classid__ = Schema.__classid__
   }
 
-  static create(raw, collection) {
+  static create(raw, options) {
     let schema = new Schema()
     for(let prop in raw) {
       if(raw.hasOwnProperty(prop)) {
         schema.fields[prop] = FieldInfo.create(prop, raw[prop])
       }
     }
-    schema.collection = collection
+    schema.options = options
     return schema
   }
 

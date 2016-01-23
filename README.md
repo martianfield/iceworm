@@ -173,7 +173,7 @@ let raw_schema = {
 let schema = iceworm.Schema.create(raw_schema)
 ```
 
-To evaluate an object you can either 
+To evaluate an object you can then either 
 
 - pass the schema object to the evaluate function
 - use the evaluate method of the schema object:
@@ -183,6 +183,14 @@ let result_1 = iceworm.evaluate(schema)
 let result_2 = schema.evaluate()
 ```
 
+Additionally, `Schema.create()` takes an additional, optional parameter. Whatever you put in there is stored in a property named `options`.
+
+```javascript
+let options = {"collection":"employees"}
+let schema = iceworm.Schema.create(raw_schema, options)
+
+let collection = schema.options.collection // containts 'employees'
+```
 
 
 ## Extensions
