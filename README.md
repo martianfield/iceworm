@@ -47,7 +47,7 @@ else {
 
 ## Schema Definition
 
-A schema is an object containing keys for fields and values for definitions:
+A schema is defined through an object containing keys for fields and values for definitions:
 
 ```javascript
 let schema = {
@@ -159,6 +159,30 @@ Notes:
 - floating point values in an `int` field are floored
 - patching `email` fields only converts the given value into a string, since no more sensible patching can be done
 - patching array fields will return in an empty array if the supplied value is not an array
+
+
+## Reusing Schemas
+
+Instead of having iceworm recreate the schema each time you want to evaluate an object against it, you can use a re-usable schema object:
+
+```javascript
+let raw_schema = {
+    name: '*string',
+    age: 'int>0'
+}
+let schema = iceworm.Schema.create(raw_schema)
+```
+
+To evaluate an object you can either 
+
+- pass the schema object to the evaluate function
+- use the evaluate method of the schema object:
+
+```javascript
+let result_1 = iceworm.evaluate(schema)
+let result_2 = schema.evaluate()
+```
+
 
 
 ## Extensions
