@@ -16,26 +16,42 @@ describe('Float Validator', () => {
     v_int.valid.should.equal(true);
     v_bool.valid.should.equal(false);
     v_string.valid.should.equal(false);
-  });
+  })
+
   it('Required', () => {
     let schema = FieldInfo.create('', "*float");
     let validation = iceworm.validators.float(undefined, schema);
     validation.valid.should.equal(false);
     validation.errors.length.should.equal(1);
     validation.errors[0].reason.should.equal("required");
-  });
+  })
+
   it("Min", () => {
-    let schema = FieldInfo.create('', "float>10");
-    let validation = iceworm.validators.float(9, schema);
-    validation.valid.should.equal(false);
-    validation.errors.length.should.equal(1);
-    validation.errors[0].reason.should.equal("min");
-  });
+    let schema = FieldInfo.create('', "float>10")
+    let validation = iceworm.validators.float(9, schema)
+    validation.valid.should.equal(false)
+    validation.errors.length.should.equal(1)
+    validation.errors[0].reason.should.equal("min")
+  })
+
+  it("Min (no value provided)", () => {
+    let schema = FieldInfo.create('', "float>10")
+    let validation = iceworm.validators.float(undefined, schema)
+    validation.valid.should.equal(true)
+  })
+
   it("Max", () => {
-    let schema = FieldInfo.create('', "float<10");
-    let validation = iceworm.validators.float(10, schema);
-    validation.valid.should.equal(false);
-    validation.errors.length.should.equal(1);
-    validation.errors[0].reason.should.equal("max");
-  });
-});
+    let schema = FieldInfo.create('', "float<10")
+    let validation = iceworm.validators.float(10, schema)
+    validation.valid.should.equal(false)
+    validation.errors.length.should.equal(1)
+    validation.errors[0].reason.should.equal("max")
+  })
+
+  it("Max (no value provided)", () => {
+    let schema = FieldInfo.create('', "float<10")
+    let validation = iceworm.validators.float(undefined, schema)
+    validation.valid.should.equal(true)
+  })
+
+})
