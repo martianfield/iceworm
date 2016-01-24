@@ -5,6 +5,7 @@ const extensions = require(__dirname + '/extensions.js');
 
 module.exports = (obj, documentSchema) => {
   let output = {};
+  //let objs = obj.constructor === Array ? obj : [obj]
 
   for(let field in documentSchema.fields) {
     let fieldInfo = documentSchema.fields[field];
