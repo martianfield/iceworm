@@ -1,6 +1,6 @@
 // methods
 const validate = require(__dirname + '/src/validate.js');
-const patch = require(__dirname + '/src/patch.js');
+const project = require(__dirname + '/src/project.js');
 const evaluate = require(__dirname + '/src/evaluate.js');
 const extend = require(__dirname + '/src/extend.js');
 
@@ -10,14 +10,14 @@ const Schema = require(__dirname + '/src/Schema.js');
 
 // collections
 const validators = require(__dirname + '/src/validators.js');
-const patchers = require(__dirname + '/src/patchers.js');
+const projectors = require(__dirname + '/src/projectors.js');
 const extensions = require(__dirname + '/src/extensions.js');
 
 module.exports = {
   validate: validate,
-  patch: patch,
+  project: project,
   validators: validators,
-  patchers: patchers,
+  projectors: projectors,
   evaluate: evaluate,
   extensions : extensions,
   extend: extend,

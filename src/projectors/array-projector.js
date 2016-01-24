@@ -7,9 +7,9 @@ module.exports = (obj, fieldInfo) => {
   }
 
   let result = []
-  let patch = fieldInfo.patcher()
+  let project = fieldInfo.projector()
   obj.forEach((item) => {
-    result.push(patch(item))
+    result.push(project(item))
   })
 
   return result

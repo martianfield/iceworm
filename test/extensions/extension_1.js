@@ -28,7 +28,7 @@ const validate_bling = (value, fieldSchema) => {
   }
 };
 
-const patch_thing = (value) => {
+const project_thing = (value) => {
   if(value === null || value === undefined) {
     return undefined;
   }
@@ -37,7 +37,7 @@ const patch_thing = (value) => {
   }
 };
 
-const patch_bling = (value) => {
+const project_bling = (value) => {
   return "bling";
 }
 
@@ -45,7 +45,7 @@ module.exports.validators = {
   'thing': validate_thing,
   'bling': validate_bling
 };
-module.exports.patchers = {
-  'thing': patch_thing,
-  'bling': patch_bling
+module.exports.projectors = {
+  'thing': project_thing,
+  'bling': project_bling
 }

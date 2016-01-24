@@ -1,6 +1,6 @@
 # Iceworm
 
-A lightweight object validation and patching library.
+A lightweight object validation and projection library.
 
 ## Quickstart
 
@@ -10,7 +10,7 @@ Install iceworm using npm:
 npm install iceworm --save
 ``` 
 
-Iceworm lets you quickly define schemas and validate objects against them. It also returns a 'patched' version of the object (see below).
+Iceworm lets you quickly define schemas and validate objects against them. It also returns a projected version of the object (see below).
 
 Here an example:
 
@@ -100,7 +100,7 @@ The `evaluate(<obj>, <schema>)` function returns an object containing
 
 - the validation result (`true` or `false`)
 - an array of validation errors (if any)
-- a patched version of the object passed (see the note about Patching further down)
+- a projected version of the object passed (see the note about Projection further down)
 
 
 Here an example:
@@ -137,28 +137,28 @@ A note on the errors array:
         - `'format'` - the value was not formatted correctly (e.g. invalid email address)
 
 
-## Patching
+## Projection
 
-Calling `evaluate(<obj>,<schema>)` will return a result containing a 'patched' version of the object you passed:
+Calling `evaluate(<obj>,<schema>)` will return a result containing a projected version of the object you passed:
 
 ```javascript
-let result = iceworm.patch(obj, schema);
-let patched = result.obj;
+let result = iceworm.project(obj, schema);
+let projected = result.obj;
 ```
 
-A 'patched' version means that 
+A projected version means that 
 
-- possible type conversions have been executed. E.g. if your schema calls for a string but a number was supplied, the patched version is of type string
-- hidden fields are not projected. E.g. if you have a field `'{'middleName':'-string'}` it will not be contained in the patched object
+- possible type conversions have been executed. E.g. if your schema calls for a string but a number was supplied, the projected version is of type string
+- hidden fields are not projected. E.g. if you have a field `'{'middleName':'-string'}` it will not be contained in the projected object
 
 
 Notes:
 
-- if the source object contains `null` or `undefined` values, the patched version makes no assumption about your use of those values. I.e. it will not change such values; it is up to you to decide what to do with them.
-- the `int` and `float` types are patched to `undefined` if the provided value cannot be converted to a numeric value
+- if the source object contains `null` or `undefined` values, the projected version makes no assumption about your use of those values. I.e. it will not change such values; it is up to you to decide what to do with them.
+- the `int` and `float` types are projected to `undefined` if the provided value cannot be converted to a numeric value
 - floating point values in an `int` field are floored
-- patching `email` fields only converts the given value into a string, since no more sensible patching can be done
-- patching array fields will return in an empty array if the supplied value is not an array
+- projection of `email` fields only converts the given value into a string, since no more sensible patching can be done
+- projection of array fields will return in an empty array if the supplied value is not an array
 
 
 ## Reusing Schemas

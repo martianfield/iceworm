@@ -1,7 +1,7 @@
 'use strict';
 
 const validators = require(__dirname + '/validators.js')
-const patchers = require(__dirname + '/patchers.js')
+const projectors = require(__dirname + '/projectors.js')
 const extensions = require(__dirname + '/extensions.js')
 const _ = require('lodash')
 
@@ -29,18 +29,18 @@ class FieldInfo {
     return validator
   }
 
-  patcher() {
-    let patcher = undefined
+  projector() {
+    let projector = undefined
 
     if(this.namespace === undefined) {
-      patcher = patchers[this.type]
+      projector = projectors[this.type]
     }
     else {
-      patcher = extensions[this.namespace]
-        .patchers[this.type]
+      projector = extensions[this.namespace]
+        .projectors[this.type]
     }
 
-    return patcher
+    return projector
   }
 
   static create(name, definition) {

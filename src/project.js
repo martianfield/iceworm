@@ -1,6 +1,6 @@
 'use strict';
 
-const patchers = require(__dirname + '/patchers.js');
+const projectors = require(__dirname + '/projectors.js');
 const extensions = require(__dirname + '/extensions.js');
 
 module.exports = (obj, documentSchema) => {
@@ -16,13 +16,13 @@ module.exports = (obj, documentSchema) => {
             output[field] = undefined;
           }
           else {
-            let patch = fieldInfo.patcher()
-            output[field] = patch(obj[field])
+            let project = fieldInfo.projector()
+            output[field] = project(obj[field])
           }
         }
         else {
-          let patch = patchers.array
-          output[field] = patch(obj[field], fieldInfo)
+          let project = projectors.array
+          output[field] = project(obj[field], fieldInfo)
         }
       }
     }

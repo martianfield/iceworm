@@ -3,22 +3,22 @@ const should = require('chai').should();
 const expect = require('chai').expect;
 const iceworm = require(__dirname + '/../index.js');
 
-describe("Patching", () => {
+describe("Projection", () => {
 
-  describe("bool patching", () => {
+  describe("bool projection", () => {
     it("undefined / null", () => {
       // arrange / act
-      let result_undefined = iceworm.patchers.bool(undefined);
-      let result_null = iceworm.patchers.bool(null);
+      let result_undefined = iceworm.projectors.bool(undefined);
+      let result_null = iceworm.projectors.bool(null);
       // assert
       expect(result_undefined).to.equal(undefined);
       expect(result_null).to.equal(null);
     });
     it("from string", () => {
       // arrange / act
-      let result_true = iceworm.patchers.bool("true");
-      let result_false = iceworm.patchers.bool("false");
-      let result_random = iceworm.patchers.bool("any type of text");
+      let result_true = iceworm.projectors.bool("true");
+      let result_false = iceworm.projectors.bool("false");
+      let result_random = iceworm.projectors.bool("any type of text");
       // assert type
       expect(result_true).to.be.a('boolean');
       expect(result_false).to.be.a('boolean');
@@ -30,8 +30,8 @@ describe("Patching", () => {
     });
     it("from number", () => {
       // arrange / act
-      let result_true = iceworm.patchers.bool(1);
-      let result_false = iceworm.patchers.bool(0);
+      let result_true = iceworm.projectors.bool(1);
+      let result_false = iceworm.projectors.bool(0);
       // assert type
       expect(result_true).to.be.a('boolean');
       expect(result_false).to.be.a('boolean');
@@ -41,78 +41,78 @@ describe("Patching", () => {
     });
   });
 
-  describe("email patching", () => {
+  describe("email projection", () => {
     it("from undefined / null", () => {
-      expect(iceworm.patchers.email(undefined)).to.equal(undefined);
-      expect(iceworm.patchers.email(null)).to.equal(null);
+      expect(iceworm.projectors.email(undefined)).to.equal(undefined);
+      expect(iceworm.projectors.email(null)).to.equal(null);
     });
     it("bool, number, etc", () => {
-      expect(iceworm.patchers.email(true)).to.be.a('string');
-      expect(iceworm.patchers.email(false)).to.be.a('string');
-      expect(iceworm.patchers.email(12)).to.be.a('string');
-      expect(iceworm.patchers.email(12.56)).to.be.a('string');
+      expect(iceworm.projectors.email(true)).to.be.a('string');
+      expect(iceworm.projectors.email(false)).to.be.a('string');
+      expect(iceworm.projectors.email(12)).to.be.a('string');
+      expect(iceworm.projectors.email(12.56)).to.be.a('string');
     });
   });
 
-  describe("float patching", () => {
+  describe("float projection", () => {
     it("undefined / null", () => {
-      expect(iceworm.patchers.float(undefined)).to.equal(undefined);
-      expect(iceworm.patchers.float(null)).to.equal(null);
+      expect(iceworm.projectors.float(undefined)).to.equal(undefined);
+      expect(iceworm.projectors.float(null)).to.equal(null);
     });
     it("NaN", () => {
-      expect(iceworm.patchers.float("something")).to.equal(undefined);
+      expect(iceworm.projectors.float("something")).to.equal(undefined);
     });
     it("a number", () => {
-      let result = iceworm.patchers.float(1);
+      let result = iceworm.projectors.float(1);
       result.should.equal(1);
       expect(result).to.be.a('number');
     });
     it("a numeric string", () => {
-      let result = iceworm.patchers.float("1.8");
+      let result = iceworm.projectors.float("1.8");
       result.should.equal(1.8);
       expect(result).to.be.a('number');
     });
   });
 
-  describe("int patching", () => {
+  describe("int projection", () => {
     it("undefined / null", () => {
-      expect(iceworm.patchers.int(undefined)).to.equal(undefined);
-      expect(iceworm.patchers.int(null)).to.equal(null);
+      expect(iceworm.projectors.int(undefined)).to.equal(undefined);
+      expect(iceworm.projectors.int(null)).to.equal(null);
     });
     it("NaN", () => {
-      expect(iceworm.patchers.int("something")).to.equal(undefined);
+      expect(iceworm.projectors.int("something")).to.equal(undefined);
     });
     it("a number", () => {
-      let result = iceworm.patchers.int(1.8);
+      let result = iceworm.projectors.int(1.8);
       result.should.equal(1);
       expect(result).to.be.a('number');
     });
     it("a numeric string", () => {
-      let result = iceworm.patchers.int("1.8");
+      let result = iceworm.projectors.int("1.8");
       result.should.equal(1);
       expect(result).to.be.a('number');
     });
   });
 
-  describe("string patching", () => {
+  describe("string projection", () => {
     it("from undefined / null", () => {
       // arrange / act
-      let result_undefined = iceworm.patchers.string(undefined);
-      let result_null = iceworm.patchers.string(null);
+      let result_undefined = iceworm.projectors.string(undefined);
+      let result_null = iceworm.projectors.string(null);
       // assert
       expect(result_undefined).to.equal(undefined);
       expect(result_null).to.equal(null);
     });
     it("from number", () => {
       // arrange / act
-      let result = iceworm.patchers.string(1);
+      let result = iceworm.projectors.string(1);
       // assert
       expect(result).to.be.a('string');
     });
     it("from bool", () => {
       // arrange, act
-      let result_true = iceworm.patchers.string(true);
-      let result_false = iceworm.patchers.string(false);
+      let result_true = iceworm.projectors.string(true);
+      let result_false = iceworm.projectors.string(false);
       // assert
       expect(result_true).to.be.a('string');
       expect(result_false).to.be.a('string');
@@ -121,7 +121,7 @@ describe("Patching", () => {
     });
   });
 
-  it("patch()",  () => {
+  it("project()",  () => {
     // arrange
     let docSchema = iceworm.Schema.create({
       name:'string',
@@ -138,16 +138,16 @@ describe("Patching", () => {
       scottish: true
     }
     // act
-    let patched = iceworm.patch(obj, docSchema);
+    let projected = iceworm.project(obj, docSchema);
     // assert
-    patched.name.should.equal(obj.name);
-    patched.email.should.equal(obj.email);
-    patched.age.should.equal(obj.age);
-    patched.height.should.equal(obj.height);
-    patched.scottish.should.equal(obj.scottish);
+    projected.name.should.equal(obj.name);
+    projected.email.should.equal(obj.email);
+    projected.age.should.equal(obj.age);
+    projected.height.should.equal(obj.height);
+    projected.scottish.should.equal(obj.scottish);
   })
 
-  it("patch() with hidden fields", () => {
+  it("project() with hidden fields", () => {
     // arrange
     let schema = iceworm.Schema.create({
       name:'string',
@@ -158,12 +158,12 @@ describe("Patching", () => {
       age: 24
     }
     // act
-    let patched = iceworm.patch(obj, schema)
+    let projected = iceworm.project(obj, schema)
     // assert
-    patched.hasOwnProperty('age').should.equal(false)
+    projected.hasOwnProperty('age').should.equal(false)
   })
 
-  it("patch() with array", () => {
+  it("project() with array", () => {
     // arrange
     let schema = iceworm.Schema.create({
       name:'string',
@@ -174,8 +174,8 @@ describe("Patching", () => {
       grades: [1, 2, 4, 8, 16]
     }
     // act
-    let patched = iceworm.patch(obj, schema)
-    patched.grades.should.deep.equal([1, 2, 4, 8, 16])
+    let projected = iceworm.project(obj, schema)
+    projected.grades.should.deep.equal([1, 2, 4, 8, 16])
   })
 
 })
