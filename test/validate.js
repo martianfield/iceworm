@@ -32,6 +32,21 @@ describe("validate()", () => {
     result.errors.length.should.equal(2);
   })
 
+  it("Invalid result in Array of Objects", () => {
+    // arrange
+    let schema = iceworm.Schema.create({
+      name:"*string",
+      age:"int>20"
+    });
+    let obj1 = { age: 18}
+    let obj2 = { name:"peter", age: 22}
+    // act
+    let result = iceworm.validate([obj1, obj2], schema);
+    // assert
+    result.valid.should.equal(false);
+    result.errors.length.should.equal(2);
+  })
+
   it('Invalid result (field name in error)', () => {
     // arrange
     let schema = iceworm.Schema.create({
