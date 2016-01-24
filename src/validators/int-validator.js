@@ -3,8 +3,10 @@
 module.exports = (value, fieldSchema) => {
   let errors = [];
 
-  if(value === undefined || value === null && fieldSchema.required) {
-    errors.push({message:'value not provided', reason:'required'});
+  if(value === undefined || value === null) {
+    if(fieldSchema.required) {
+      errors.push({message:'value not provided', reason:'required'});
+    }
   }
   else {
     if(isNaN(value)) {

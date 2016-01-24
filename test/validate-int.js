@@ -16,26 +16,41 @@ describe('Int Validator', () => {
     v_double.valid.should.equal(false);
     v_bool.valid.should.equal(false);
     v_string.valid.should.equal(false);
-  });
+  })
+
   it('Required', () => {
     let schema = FieldInfo.create('test', "*int");
     let validation = iceworm.validators.int(undefined, schema);
     validation.valid.should.equal(false);
     validation.errors.length.should.equal(1);
     validation.errors[0].reason.should.equal("required");
-  });
+  })
+
   it("Min", () => {
+    let schema = FieldInfo.create('test', "int>10")
+    let validation = iceworm.validators.int(9, schema)
+    validation.valid.should.equal(false)
+    validation.errors.length.should.equal(1)
+    validation.errors[0].reason.should.equal("min")
+  })
+
+  it("Min (value NOT provided, but not required", () => {
     let schema = FieldInfo.create('test', "int>10");
-    let validation = iceworm.validators.int(9, schema);
-    validation.valid.should.equal(false);
-    validation.errors.length.should.equal(1);
-    validation.errors[0].reason.should.equal("min");
-  });
+    let validation = iceworm.validators.int(undefined, schema)
+    validation.valid.should.equal(true)
+  })
+
   it("Max", () => {
     let schema = FieldInfo.create('test', "int<10");
     let validation = iceworm.validators.int(10, schema);
     validation.valid.should.equal(false);
     validation.errors.length.should.equal(1);
     validation.errors[0].reason.should.equal("max");
-  });
-});
+  })
+
+  it("Max (value NOT provided, but not required", () => {
+    let schema = FieldInfo.create('test', "int<10");
+    let validation = iceworm.validators.int(undefined, schema)
+    validation.valid.should.equal(true)
+  })
+})
