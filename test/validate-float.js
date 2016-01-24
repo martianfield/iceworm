@@ -18,6 +18,12 @@ describe('Float Validator', () => {
     v_string.valid.should.equal(false);
   })
 
+  it("Type from numeric string", () => {
+    let schema = FieldInfo.create('', "float")
+    let v_from_string = iceworm.validators.float("12.5", schema)
+    v_from_string.valid.should.equal(true)
+  })
+
   it('Required', () => {
     let schema = FieldInfo.create('', "*float");
     let validation = iceworm.validators.float(undefined, schema);

@@ -10,22 +10,28 @@ module.exports = (value, fieldSchema) => {
   }
   else {
     if(isNaN(value)) {
-      errors.push({message:'not a number', reason:'type'});
+      errors.push({message:'not a number', reason:'type'})
     }
-    else if(!(typeof value === 'number' && (value % 1) === 0)) {
-      errors.push({message:'not an integer', reason:'type'});
+    else if(typeof value === 'boolean') {
+      errors.push({message:'not a number', reason:'type'})
     }
     else {
-      value = parseInt(value);
-
-      if(fieldSchema.min) {
-        if(value < fieldSchema.min) {
-          errors.push({message:'value too small', reason:'min'});
-        }
+      value = Number(value)
+      if((value % 1) !== 0) {
+        errors.push({message:'not an integer', reason:'type'});
       }
-      if(fieldSchema.max) {
-        if(value >= fieldSchema.max) {
-          errors.push({message:'value too large', reason:'max'});
+      else {
+        value = parseInt(value);
+
+        if(fieldSchema.min) {
+          if(value < fieldSchema.min) {
+            errors.push({message:'value too small', reason:'min'});
+          }
+        }
+        if(fieldSchema.max) {
+          if(value >= fieldSchema.max) {
+            errors.push({message:'value too large', reason:'max'});
+          }
         }
       }
     }

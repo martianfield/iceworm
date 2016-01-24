@@ -12,8 +12,8 @@ module.exports = (value, fieldSchema) => {
     if(isNaN(value)) {
       errors.push({message:'not a number', reason:'type'});
     }
-    else if(!(typeof value === 'number')) {
-      errors.push({message:'not a number', reason:'type'});
+    else if(typeof value === 'boolean') {
+      errors.push({message:'not a number', reason:'type'})
     }
     else {
       value = parseFloat(value);
