@@ -4,7 +4,7 @@ const expect = require('chai').expect;
 const iceworm = require(__dirname + '/../index.js');
 const Schema = iceworm.Schema;
 
-describe('Document Schema Creation', () => {
+describe('Schema', () => {
   it('Fields count', () => {
     let raw = {
       name:'*string>10',
@@ -12,16 +12,20 @@ describe('Document Schema Creation', () => {
       married:'bool'
     }
     let schema = Schema.create(raw)
-    let fieldCount = 0;
-    for(let field in schema.fields) {
-      if(schema.fields.hasOwnProperty(field)) {
-        fieldCount += 1;
-      }
+    schema.fields.length.should.equal(3)
+  })
+
+  it(('Field name'), () => {
+    let raw = {
+      name:'*string>10',
+      age:'int',
+      married:'bool'
     }
-    expect(schema.fields['name'].name).to.equal('name')
-    expect(schema.fields['age'].name).to.equal('age')
-    expect(schema.fields['married'].name).to.equal('married')
-    fieldCount.should.equal(3)
+    let schema = Schema.create(raw)
+    expect(schema.field('name').name).to.equal('name')
+    expect(schema.field('age').name).to.equal('age')
+    expect(schema.field('married').name).to.equal('married')
+    expect(schema.field('does-not-exist')).to.equal(undefined)
   })
 
   it('Options', () => {

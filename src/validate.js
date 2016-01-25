@@ -4,6 +4,16 @@ const validators = require(__dirname + '/validators.js')
 module.exports = (obj, documentSchema) => {
   let errors = []
 
+  documentSchema.fields.forEach((fi) => {
+    let validator = fi.array ? validators.array : fi.validator()
+
+    let result = validator(obj[fi.name], fi)
+
+    if(!result.valid) {
+      errors.push({field:fi.name, errors:result.errors});
+    }
+  })
+  /*
   for(let field in documentSchema.fields) {
     if(documentSchema.fields.hasOwnProperty(field)) {
       let fieldInfo = documentSchema.fields[field];
@@ -17,6 +27,7 @@ module.exports = (obj, documentSchema) => {
 
     }
   }
+  */
 
   return {
     valid: errors.length === 0,
