@@ -15,6 +15,7 @@ module.exports = class Schema {
   }
 
   static create(raw, options) {
+    options = options === undefined ? {} : options
     let schema = new Schema()
     for(let prop in raw) {
       if(raw.hasOwnProperty(prop)) {
