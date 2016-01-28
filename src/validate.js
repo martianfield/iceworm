@@ -1,7 +1,10 @@
 'use strict';
 const validators = require(__dirname + '/validators.js')
+const merge = require('setthings').merge
 
-module.exports = (obj, documentSchema) => {
+module.exports = (obj, documentSchema, options) => {
+  options = merge(options, {ignoreRequired:false})
+
   let errors = []
 
   documentSchema.fields.forEach((fi) => {
@@ -10,24 +13,14 @@ module.exports = (obj, documentSchema) => {
     let result = validator(obj[fi.name], fi)
 
     if(!result.valid) {
-      errors.push({field:fi.name, errors:result.errors});
+      result.errors.forEach(error => {
+        if(error.reason === 'required' && options.ignoreRequired) {
+          return
+        }
+        errors.push({field:fi.name, errors:result.errors})
+      })
     }
   })
-  /*
-  for(let field in documentSchema.fields) {
-    if(documentSchema.fields.hasOwnProperty(field)) {
-      let fieldInfo = documentSchema.fields[field];
-      let validator = fieldInfo.array ? validators.array : fieldInfo.validator()
-
-      let result = validator(obj[field], fieldInfo)
-
-      if(!result.valid) {
-        errors.push({field:field, errors:result.errors});
-      }
-
-    }
-  }
-  */
 
   return {
     valid: errors.length === 0,

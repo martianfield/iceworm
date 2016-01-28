@@ -79,4 +79,17 @@ describe("validate()", () => {
     result.errors[0].errors[0].reason.should.equal('type')
     // TODO should we not rather return a flat result?
   })
+
+  it('Ignore Required', () => {
+    // arrange
+    let schema = iceworm.Schema.create({
+      name:'*string', age:'*int', email:'*email', size:'*float', scottish:'*bool'
+    })
+    let obj = { }
+    let options = { ignoreRequired: true }
+    // act
+    let result = iceworm.validate(obj, schema, options)
+    // assert
+    result.valid.should.equal(true)
+  })
 })
