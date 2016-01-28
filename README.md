@@ -137,6 +137,19 @@ A note on the errors array:
         - `'format'` - the value was not formatted correctly (e.g. invalid email address)
 
 
+## Validation
+
+Validation can also be executed on its own:
+
+```javascript
+iceworm.validate(<obj>, <schema> [,<options>])
+```
+
+The optional options object supports the following fields:
+
+- `ignoreRequired`: if set to true, the field will not cause a validation error if no value is provided. Default: `false`
+
+
 ## Projection
 
 Calling `evaluate(<obj>,<schema>)` will return a result containing a projected version of the object you passed:
