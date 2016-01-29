@@ -68,16 +68,16 @@ describe("validate()", () => {
       city:'string',
       temperatures:'int[]'
     })
-    let obj = { title: 'title', temperatures:[1, 2, 'not an int'] }
+    let obj = { title: 'title', temperatures:[1, 2, 'not an int', 4, 'five'] }
     // act
     let result = iceworm.validate(obj, schema)
     // assert
     result.valid.should.equal(false)
-    result.errors.length.should.equal(1)
+    result.errors.length.should.equal(2)
     result.errors[0].field.should.equal('temperatures')
-    result.errors[0].errors.length.should.equal(1)
-    result.errors[0].errors[0].reason.should.equal('type')
-    // TODO should we not rather return a flat result?
+    result.errors[0].reason.should.equal('type')
+    result.errors[1].field.should.equal('temperatures')
+    result.errors[1].reason.should.equal('type')
   })
 
   it('Ignore Required', () => {

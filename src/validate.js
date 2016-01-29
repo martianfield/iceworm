@@ -17,7 +17,11 @@ module.exports = (obj, documentSchema, options) => {
         if(error.reason === 'required' && options.ignoreRequired) {
           return
         }
-        errors.push({field:fi.name, errors:result.errors})
+        errors.push({
+          field:fi.name,
+          message:error.message,
+          reason:error.reason
+        })
       })
     }
   })
