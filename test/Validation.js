@@ -3,7 +3,7 @@ const iceworm = require(__dirname + '/../index.js');
 const should = require('chai').should();
 
 
-describe("validate()", () => {
+describe("Validation", () => {
   it("Valid result", () => {
     // arrange
     let schema = iceworm.Schema.create({
