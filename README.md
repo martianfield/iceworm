@@ -183,7 +183,10 @@ let raw_schema = {
     name: '*string',
     age: 'int>0'
 }
-let schema = iceworm.Schema.create(raw_schema)
+// create the schema using the static Schema.create() function
+let schema1 = iceworm.Schema.create(raw_schema)
+// or simply use the Schema constructor
+let schema2 = new iceworm.Schema(raw_schema)
 ```
 
 To evaluate an object you can then either 

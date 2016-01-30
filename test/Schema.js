@@ -1,10 +1,22 @@
-'use strict';
-const should = require('chai').should();
-const expect = require('chai').expect;
-const iceworm = require(__dirname + '/../index.js');
-const Schema = iceworm.Schema;
+'use strict'
+
+const should = require('chai').should()
+const expect = require('chai').expect
+const iceworm = require(__dirname + '/../index.js')
+const Schema = iceworm.Schema
 
 describe('Schema', () => {
+  it('Schema.create() vs new Schema()', () => {
+    let raw = {
+      name:'*string>10',
+      age:'int',
+      married:'bool'
+    }
+    let schema1 = Schema.create(raw)
+    let schema2 = new Schema(raw)
+    schema1.should.deep.equal(schema2)
+  })
+
   it('Fields count', () => {
     let raw = {
       name:'*string>10',
