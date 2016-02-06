@@ -1,6 +1,6 @@
 {
   "name": "iceworm",
-  "version": "0.5.8",
+  "version": "0.5.9",
   "description": "A lightweight schema validator and projector",
   "main": "index.js",
   "scripts": {
