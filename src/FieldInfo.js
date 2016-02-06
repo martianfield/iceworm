@@ -13,6 +13,7 @@ class FieldInfo {
     this.array = false
     this.required = false
     this.hidden = false
+    this.unique = false
     this.min = undefined
     this.max = undefined
   }
@@ -54,16 +55,20 @@ class FieldInfo {
     // name
     fi.name = name
 
-    // required / hidden
+    // required / hidden / unique
+    // TODO this is one hell of an ugly way of implementing this
     let prefix_count = 0;
-
-    if( _.startsWith(definition, '*', 0) || _.startsWith(definition, '*', 1)) {
+    if( _.startsWith(definition, '*', 0) || _.startsWith(definition, '*', 1) || _.startsWith(definition, '*', 2)) {
       prefix_count += 1;
       fi.required = true;
     }
-    if( _.startsWith(definition, '-', 0) || _.startsWith(definition, '-', 1)) {
+    if( _.startsWith(definition, '-', 0) || _.startsWith(definition, '-', 1) || _.startsWith(definition, '-', 2)) {
       prefix_count += 1;
       fi.hidden = true;
+    }
+    if( _.startsWith(definition, '!', 0) || _.startsWith(definition, '!', 1) || _.startsWith(definition, '!', 2)) {
+      prefix_count += 1;
+      fi.unique = true;
     }
 
     // remove prefixes

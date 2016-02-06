@@ -18,7 +18,7 @@ Here an example:
 const iceworm = require('iceworm');
 
 // define the schema
-let schema = {
+let schema_definition = {
     firstName: '*string>3',
     userName: '*string>10<60',
     age: 'int>0',
@@ -33,7 +33,7 @@ var obj = {
 }
 
 // evaluate
-var result = iceworm.evaluate(obj, schema);
+var result = iceworm.evaluate(obj, schema_definition);
 
 if(result.isValid) {
     console.dir(result.obj)
@@ -59,8 +59,9 @@ let schema = {
 
 The definition consist of
 
-- indicator if the field is required ... if required, put an asterisk `*` at the beginning
-- indicator if the field is projected ... if not projected, prefix with `-`
+- `*` : indicator if the field is required ... if required, put an asterisk `*` at the beginning
+- `-` : indicator if the field is projected ... if not projected, prefix with `-`
+- `!` : indicator if the field's value should be unique. Note that iceworm ignores this when validating. The FieldInfo's property `unique` is set to true if this is set.
 - a type name, currently the following types are supported
     - `string`
     - `int`
@@ -239,8 +240,5 @@ const schema = {
 ## Roadmap
 
 - nested documents
-
-
-
-
-// TODO 'Writing Extensions'
+- document how to write extensions
+- document `FieldInfo`

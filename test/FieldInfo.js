@@ -29,11 +29,13 @@ describe("FieldInfo", () => {
     })
 
     it('Required', () => {
+      // TODO we are not covering all possible combinations here
       FieldInfo.create('', '*type[]').required.should.equal(true);
       FieldInfo.create('', 'type[]').required.should.equal(false);
     })
 
     it('Hidden', () => {
+      // TODO we are not covering all possible combinations here
       let visible = FieldInfo.create('', 'string');
       visible.hidden.should.equal(false);
       let hidden = FieldInfo.create('', '-string');
@@ -45,6 +47,17 @@ describe("FieldInfo", () => {
       required_hidden.hidden.should.equal(true);
       required_hidden.required.should.equal(true);
 
+    })
+
+    it('Unique', () => {
+      // TODO we are not covering all possible combinations here
+      let unique = FieldInfo.create('', '!string')
+      unique.unique.should.equal(true)
+      let unique_required = FieldInfo.create('', '!*string')
+      unique_required.unique.should.equal(true)
+      unique_required.unique.should.equal(true)
+      let required = FieldInfo.create('', '*string')
+      required.unique.should.equal(false)
     })
 
     it('array', () => {
