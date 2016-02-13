@@ -10,6 +10,7 @@ class FieldInfo {
     this.name = undefined
     this.namespace = undefined
     this.type = undefined
+    this.schema = undefined // if the type is an embedded schema this will be set
     this.array = false
     this.required = false
     this.hidden = false
@@ -44,7 +45,7 @@ class FieldInfo {
     return projector
   }
 
-  static create(name, definition) {
+  static create(name, definition, embedded) {
     let re, matches
     let fi = new FieldInfo();
 
@@ -89,6 +90,11 @@ class FieldInfo {
       else {
         fi.type = t_and_s[0];
       }
+    }
+
+    // embedded type?
+    if(embedded.hasOwnProperty(fi.type)) {
+      fi.schema = embedded[fi.type]
     }
 
     // array

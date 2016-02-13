@@ -40,21 +40,14 @@ describe('Schema', () => {
     expect(schema.field('does-not-exist')).to.equal(undefined)
   })
 
-  it('Options', () => {
-    // arrange
-    let raw = { name: '*string' }
-    let options = {
-      collection: 'companions',
-      names: [
-        'Amy',
-        'Rose',
-        'Donna'
-      ]
-    }
-    // act
-    let schema = Schema.create(raw, options)
+  it('Embedded Types', () => {
+    // arrange / act
+    let cat_schema = new Schema({ name: "*string"})
+    let owner = new Schema({ name: "*string", pet: "*cat"}, {cat:cat_schema})
     // assert
-    schema.options.should.deep.equal(options)
-
+    let embedded_field = owner.field('pet')
+    expect(embedded_field.name).to.equal('pet')
+    expect(embedded_field.type).to.equal('cat')
+    expect(embedded_field.schema).to.equal(cat_schema)
   })
 })

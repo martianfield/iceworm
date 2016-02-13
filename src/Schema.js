@@ -3,26 +3,27 @@
 const FieldInfo = require(__dirname + '/FieldInfo.js');
 
 module.exports = class Schema {
-  constructor(raw, options) {
+  constructor(raw, embedded) {
+    this.embedded = embedded === undefined ? {} : embedded
     this.__classid__ = Schema.__classid__ // TODO silly workaround because instanceof is not working when require-ing this class
-    this._create(raw, options)
+    this._create(raw, embedded)
   }
 
   field(name) {
     return this.fields.find((item) => item.name.toLowerCase() === name.toLowerCase())
   }
 
-  _create(raw, options) {
-    this.options = options === undefined  ? {} : options
+  _create(raw, embedded) {
+    this.embedded = embedded === undefined  ? {} : embedded
     this.raw = raw
     this.fields = []
 
     for(let prop in this.raw) {
       if(this.raw.hasOwnProperty(prop)) {
-        this.fields.push(FieldInfo.create(prop, this.raw[prop]))
+        this.fields.push(FieldInfo.create(prop, this.raw[prop], this.embedded))
       }
     }
-    this.options = options
+    this.embedded = embedded
   }
 
   static create(raw, options) {
@@ -36,5 +37,4 @@ module.exports = class Schema {
 
 }
 
-
-//module.exports = Schema;
+// TODO get rid of the static create method and make it a module function instead

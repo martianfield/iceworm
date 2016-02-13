@@ -1,8 +1,8 @@
 // methods
-const validate = require(__dirname + '/src/validate.js');
-const project = require(__dirname + '/src/project.js');
-const evaluate = require(__dirname + '/src/evaluate.js');
-const extend = require(__dirname + '/src/extend.js');
+const validate = require(__dirname + '/src/validate.js')
+const project = require(__dirname + '/src/project.js')
+const evaluate = require(__dirname + '/src/evaluate.js')
+const extend = require(__dirname + '/src/extend.js')
 
 // classes
 const FieldInfo = require(__dirname + '/src/FieldInfo.js');
