@@ -1,6 +1,6 @@
 module.exports = (obj) => {
   if(obj === null || obj === undefined) {
-    return obj;
+    return obj
   }
-  return String(obj);
+  return String(obj)
 }

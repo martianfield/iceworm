@@ -1,12 +1,12 @@
-'use strict';
+'use strict'
 
 module.exports = (obj) => {
   if(obj === null || obj === undefined) {
-    return obj;
+    return obj
   }
-  let parsed = parseInt(obj);
+  let parsed = parseInt(obj)
   if(isNaN(parsed)) {
-    return undefined;
+    return undefined
   }
-  return parsed;
+  return parsed
 }

@@ -93,9 +93,12 @@ class FieldInfo {
     }
 
     // embedded type?
-    if(embedded.hasOwnProperty(fi.type)) {
-      fi.schema = embedded[fi.type]
+    if(embedded !== undefined) {
+      if(embedded.hasOwnProperty(fi.type)) {
+        fi.schema = embedded[fi.type]
+      }
     }
+
 
     // array
     re = /^[(\*\-)(a-zA-Z)]*(\[\])/
