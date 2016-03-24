@@ -1,33 +1,43 @@
-'use strict';
+'use strict'
 
-const FieldInfo = require(__dirname + '/FieldInfo.js');
+const FieldInfo = require(__dirname + '/FieldInfo.js')
+const cache = require(__dirname + '/cache.js')
 
 module.exports = class Schema {
-  constructor(raw, embedded) {
-    this.embedded = embedded === undefined ? {} : embedded
+  constructor(raw, name) {
     this.__classid__ = Schema.__classid__ // TODO silly workaround because instanceof is not working when require-ing this class
-    this._create(raw, embedded)
+    this.name = name
+    this.raw = raw
+    this.fields = []
+
+    // create field infos
+    for(let prop in this.raw) {
+      if(this.raw.hasOwnProperty(prop)) {
+        this.fields.push(FieldInfo.create(prop, this.raw[prop], this.embedded))
+      }
+    }
+
+    // cache (if name was given)
+    if(this.name !== undefined) {
+      cache.schemas[this.name] = this
+    }
   }
 
   field(name) {
     return this.fields.find((item) => item.name.toLowerCase() === name.toLowerCase())
   }
 
-  _create(raw, embedded) {
-    this.embedded = embedded === undefined  ? {} : embedded
-    this.raw = raw
-    this.fields = []
-
-    for(let prop in this.raw) {
-      if(this.raw.hasOwnProperty(prop)) {
-        this.fields.push(FieldInfo.create(prop, this.raw[prop], this.embedded))
-      }
+  find(name) {
+    if(cache.schemas.hasOwnProperty(name)) {
+      return cache.schemas[name]
     }
-    this.embedded = embedded
+    else {
+      return undefined
+    }
   }
 
-  static create(raw, options) {
-    return new Schema(raw, options)
+  static create(raw, name) {
+    return new Schema(raw, name)
   }
 
   // TODO silly workaround because instanceof is not working when require-ing this class

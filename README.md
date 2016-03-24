@@ -175,7 +175,7 @@ Notes:
 - projection of array fields will return in an empty array if the supplied value is not an array
 
 
-## Reusing Schemas
+## Reusing and Caching Schemas
 
 Instead of having iceworm recreate the schema each time you want to evaluate an object against it, you can use a re-usable schema object:
 
@@ -200,14 +200,24 @@ let result_1 = iceworm.evaluate(schema)
 let result_2 = schema.evaluate()
 ```
 
-Additionally, `Schema.create()` takes an additional, optional parameter. Whatever you put in there is stored in a property named `options`.
+Additionally, `Schema.create()` takes an additional, `<name>` parameter. If this parameter is supplied, the Schema is cached.
 
 ```javascript
-let options = {"collection":"employees"}
-let schema = iceworm.Schema.create(raw_schema, options)
-
-let collection = schema.options.collection // containts 'employees'
+let schema = iceworm.Schema.create(raw_schema, 'cat')
 ```
+
+Cached schemas can be retrieved using the `iceworm.cache.schemas` object. E.g.:
+
+```javascript
+let schema = iceworm.cache.schemas['cat']
+```
+
+Caching is also used when embedding documents (see below).
+
+
+## Embedding Documents
+
+NOT YET IMPLEMENTED
 
 
 ## Extensions

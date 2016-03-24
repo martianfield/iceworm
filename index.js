@@ -12,12 +12,14 @@ const Schema = require(__dirname + '/src/Schema.js');
 const validators = require(__dirname + '/src/validators.js');
 const projectors = require(__dirname + '/src/projectors.js');
 const extensions = require(__dirname + '/src/extensions.js');
+const cache = require(__dirname + '/src/cache.js')
 
 module.exports = {
   validate: validate,
   project: project,
   validators: validators,
   projectors: projectors,
+  cache: cache,
   evaluate: evaluate,
   extensions : extensions,
   extend: extend,

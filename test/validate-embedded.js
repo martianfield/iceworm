@@ -25,6 +25,6 @@ describe("Embedded Document Validation", () => {
       }
 
     )
-    rider.embed('horse', horse)
+    //rider.embed('horse', horse)
   })
 })
