@@ -1,7 +1,7 @@
 'use strict'
 
 const FieldInfo = require(__dirname + '/FieldInfo.js')
-const cache = require(__dirname + '/cache.js')
+const cache = { schemas:{}}
 
 module.exports = class Schema {
   constructor(raw, name) {
@@ -18,16 +18,33 @@ module.exports = class Schema {
     }
 
     // cache (if name was given)
-    if(this.name !== undefined) {
-      cache.schemas[this.name] = this
-    }
+    this.cache()
   }
 
   field(name) {
     return this.fields.find((item) => item.name.toLowerCase() === name.toLowerCase())
   }
 
-  find(name) {
+  cache() {
+    if(this.name !== undefined) {
+      cache.schemas[this.name] = this
+    }
+  }
+
+  // find(name) {
+  //   if(cache.schemas.hasOwnProperty(name)) {
+  //     return cache.schemas[name]
+  //   }
+  //   else {
+  //     return undefined
+  //   }
+  // }
+
+  static create(raw, name) {
+    return new Schema(raw, name)
+  }
+
+  static fromCache(name) {
     if(cache.schemas.hasOwnProperty(name)) {
       return cache.schemas[name]
     }
@@ -36,8 +53,12 @@ module.exports = class Schema {
     }
   }
 
-  static create(raw, name) {
-    return new Schema(raw, name)
+  static purgeCache() {
+    cache.schemas = {}
+  }
+
+  static cached() {
+    return cache.schemas
   }
 
   // TODO silly workaround because instanceof is not working when require-ing this class

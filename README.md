@@ -206,10 +206,10 @@ Additionally, `Schema.create()` takes an additional, `<name>` parameter. If this
 let schema = iceworm.Schema.create(raw_schema, 'cat')
 ```
 
-Cached schemas can be retrieved using the `iceworm.cache.schemas` object. E.g.:
+Cached schemas can be retrieved using the static method `iceworm.Schema.fromCache(<name>)` object. E.g.:
 
 ```javascript
-let schema = iceworm.cache.schemas['cat']
+let schema = iceworm.Schema.fromCache('cat')
 ```
 
 Caching is also used when embedding documents (see below).

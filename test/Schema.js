@@ -45,18 +45,18 @@ describe('Schema', () => {
     // Schemas are cached if a name is supplied as the second parameter in the Schema constructor or static create function.
     // Here we test if schemas are cached / not cached, depending on whether a name was given
     // arrange
-    iceworm.cache.purge('schemas')
+    iceworm.Schema.purgeCache()
     let raw = { name: '*string'}
     // act
     let schema1 = Schema.create(raw, 'person')
     let schema2 = Schema.create(raw)
     // assert that schema1 is cached
-    expect(iceworm.cache.schemas['person']).to.deep.equal(schema1)
+    expect(iceworm.Schema.fromCache('person')).to.deep.equal(schema1)
     // assert that schema2 is NOT cached
     let schema2_cached = false
-    for(let schema in iceworm.cache.schemas) {
-      if(iceworm.cache.schemas.hasOwnProperty(schema)) {
-        if(iceworm.cache.schemas[schema] === schema2) {
+    for(let schema in iceworm.Schema.cached()) {
+      if(iceworm.Schema.cached().hasOwnProperty(schema)) {
+        if(iceworm.Schema.fromCache(schema) === schema2) {
           schema2_cached = true
         }
       }
