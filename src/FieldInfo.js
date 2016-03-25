@@ -10,7 +10,6 @@ class FieldInfo {
     this.name = undefined
     this.namespace = undefined
     this.type = undefined
-    this.schema = undefined // if the type is an embedded schema this will be set
     this.array = false
     this.required = false
     this.hidden = false
@@ -20,7 +19,8 @@ class FieldInfo {
   }
 
   validator() {
-    let validator = undefined
+    let validator = validators.get(this.type, this.namespace)
+    /*
     if(this.namespace === undefined) {
       validator = validators[this.type]; // TODO if there is no validator of that type, we need to push an error
     }
@@ -28,6 +28,7 @@ class FieldInfo {
       validator = extensions[this.namespace]
         .validators[this.type]; // TODO if there is no extension of that namespace or validator of that type, we need to push an error
     }
+    */
     return validator
   }
 
@@ -45,7 +46,7 @@ class FieldInfo {
     return projector
   }
 
-  static create(name, definition, embedded) {
+  static create(name, definition) {
     let re, matches
     let fi = new FieldInfo();
 
@@ -91,14 +92,6 @@ class FieldInfo {
         fi.type = t_and_s[0];
       }
     }
-
-    // embedded type?
-    if(embedded !== undefined) {
-      if(embedded.hasOwnProperty(fi.type)) {
-        fi.schema = embedded[fi.type]
-      }
-    }
-
 
     // array
     re = /^[(\*\-)(a-zA-Z)]*(\[\])/

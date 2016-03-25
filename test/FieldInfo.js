@@ -3,7 +3,7 @@
 const should = require('chai').should();
 const expect = require('chai').expect;
 const FieldInfo = require(__dirname + '/../src/FieldInfo');
-
+const Schema = require(__dirname + '/../src/Schema');
 
 describe("FieldInfo", () => {
   let fi
@@ -26,6 +26,15 @@ describe("FieldInfo", () => {
       s_without_ns.type.should.equal('string');
       expect(s_with_ns.namespace).to.equal('something');
       s_with_ns.type.should.equal('string');
+    })
+
+    it('Type from Schema', () => {
+      // arrange (create a schema that will serve as the type of a field
+      let pet = Schema.create({'name': "*string"}, 'cat')
+      // act
+      let finfo = FieldInfo.create('cat', 'pet')
+      // assert
+      finfo.type.should.equal('pet')
     })
 
     it('Required', () => {

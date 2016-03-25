@@ -7,10 +7,10 @@ const FieldInfo = iceworm.FieldInfo;
 describe('Float Validator', () => {
   it("Type", () => {
     let schema = FieldInfo.create('', "float");
-    let v_float = iceworm.validators.float(13.5, schema);
-    let v_int = iceworm.validators.float(8, schema);
-    let v_bool = iceworm.validators.float(true, schema);
-    let v_string = iceworm.validators.float("some string", schema);
+    let v_float = iceworm.validators.get('float')(13.5, schema);
+    let v_int = iceworm.validators.get('float')(8, schema);
+    let v_bool = iceworm.validators.get('float')(true, schema);
+    let v_string = iceworm.validators.get('float')("some string", schema);
 
     v_float.valid.should.equal(true);
     v_int.valid.should.equal(true);
@@ -20,13 +20,13 @@ describe('Float Validator', () => {
 
   it("Type from numeric string", () => {
     let schema = FieldInfo.create('', "float")
-    let v_from_string = iceworm.validators.float("12.5", schema)
+    let v_from_string = iceworm.validators.get('float')("12.5", schema)
     v_from_string.valid.should.equal(true)
   })
 
   it('Required', () => {
     let schema = FieldInfo.create('', "*float");
-    let validation = iceworm.validators.float(undefined, schema);
+    let validation = iceworm.validators.get('float')(undefined, schema);
     validation.valid.should.equal(false);
     validation.errors.length.should.equal(1);
     validation.errors[0].reason.should.equal("required");
@@ -34,7 +34,7 @@ describe('Float Validator', () => {
 
   it("Min", () => {
     let schema = FieldInfo.create('', "float>10")
-    let validation = iceworm.validators.float(9, schema)
+    let validation = iceworm.validators.get('float')(9, schema)
     validation.valid.should.equal(false)
     validation.errors.length.should.equal(1)
     validation.errors[0].reason.should.equal("min")
@@ -42,13 +42,13 @@ describe('Float Validator', () => {
 
   it("Min (no value provided)", () => {
     let schema = FieldInfo.create('', "float>10")
-    let validation = iceworm.validators.float(undefined, schema)
+    let validation = iceworm.validators.get('float')(undefined, schema)
     validation.valid.should.equal(true)
   })
 
   it("Max", () => {
     let schema = FieldInfo.create('', "float<10")
-    let validation = iceworm.validators.float(10, schema)
+    let validation = iceworm.validators.get('float')(10, schema)
     validation.valid.should.equal(false)
     validation.errors.length.should.equal(1)
     validation.errors[0].reason.should.equal("max")
@@ -56,7 +56,7 @@ describe('Float Validator', () => {
 
   it("Max (no value provided)", () => {
     let schema = FieldInfo.create('', "float<10")
-    let validation = iceworm.validators.float(undefined, schema)
+    let validation = iceworm.validators.get('float')(undefined, schema)
     validation.valid.should.equal(true)
   })
 
