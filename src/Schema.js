@@ -21,6 +21,7 @@ module.exports = class Schema {
     this.cache()
   }
 
+  // TODO bad naming
   field(name) {
     return this.fields.find((item) => item.name.toLowerCase() === name.toLowerCase())
   }
@@ -31,14 +32,11 @@ module.exports = class Schema {
     }
   }
 
-  // find(name) {
-  //   if(cache.schemas.hasOwnProperty(name)) {
-  //     return cache.schemas[name]
-  //   }
-  //   else {
-  //     return undefined
-  //   }
-  // }
+  // TODO implement
+  getValidator() {
+    return () => { }
+  }
+  
 
   static create(raw, name) {
     return new Schema(raw, name)
@@ -57,6 +55,7 @@ module.exports = class Schema {
     cache.schemas = {}
   }
 
+  // TODO bad naming
   static cached() {
     return cache.schemas
   }

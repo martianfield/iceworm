@@ -18,6 +18,7 @@ class FieldInfo {
     this.max = undefined
   }
 
+  // TODO bad naming
   validator() {
     let validator = validators.get(this.type, this.namespace)
     /*
