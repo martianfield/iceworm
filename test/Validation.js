@@ -92,4 +92,6 @@ describe("Validation", () => {
     // assert
     result.valid.should.equal(true)
   })
+  
+  // Note: Validation of embedded types in EmbeddedTypes.js
 })

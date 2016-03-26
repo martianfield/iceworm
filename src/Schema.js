@@ -31,13 +31,7 @@ module.exports = class Schema {
       cache.schemas[this.name] = this
     }
   }
-
-  // TODO implement
-  getValidator() {
-    return () => { }
-  }
   
-
   static create(raw, name) {
     return new Schema(raw, name)
   }
