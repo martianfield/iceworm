@@ -7,11 +7,11 @@ const FieldInfo = iceworm.FieldInfo;
 describe('Array Validator', () => {
   it('Required', () => {
     let fieldInfo = FieldInfo.create('', '*int[]')
-    let v1 = iceworm.validators.get('array')(undefined, fieldInfo)
+    let v1 = fieldInfo.validator(undefined, fieldInfo)
     v1.valid.should.equal(false)
     v1.errors.length.should.equal(1)
     v1.errors[0].reason.should.equal('required')
-    let v2 = iceworm.validators.get('array')(null, fieldInfo)
+    let v2 = fieldInfo.validator(null, fieldInfo)
     v2.valid.should.equal(false)
     v2.errors.length.should.equal(1)
     v2.errors[0].reason.should.equal('required')
@@ -19,7 +19,7 @@ describe('Array Validator', () => {
 
   it('Not An Array', () => {
     let fieldInfo = FieldInfo.create('', "bool[]")
-    let validation = iceworm.validators.get('array')('not an array', fieldInfo)
+    let validation = fieldInfo.validator('not an array', fieldInfo)
     validation.valid.should.equal(false)
     validation.errors.length.should.equal(1)
     validation.errors[0].reason.should.equal("type")
@@ -27,7 +27,7 @@ describe('Array Validator', () => {
 
   it('Items not correct type', () => {
     let fieldInfo = FieldInfo.create('', "int[]")
-    let validation = iceworm.validators.get('array')([1, 2, "not a number"], fieldInfo)
+    let validation = fieldInfo.validator([1, 2, "not a number"], fieldInfo)
     validation.valid.should.equal(false)
     validation.errors.length.should.equal(1)
     validation.errors[0].reason.should.equal("type")
@@ -35,7 +35,7 @@ describe('Array Validator', () => {
 
   it('All good', () => {
     let fieldInfo = FieldInfo.create('', "int[]")
-    let validation = iceworm.validators.get('array')([1, 2, 3], fieldInfo)
+    let validation = fieldInfo.validator([1, 2, 3], fieldInfo)
     validation.valid.should.equal(true)
   })
 

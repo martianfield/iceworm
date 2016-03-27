@@ -1,6 +1,7 @@
 'use strict';
 
 const validators = require(__dirname + '/validators.js')
+const arrayValidator = require(__dirname + '/validators/array-validator.js')
 const projectors = require(__dirname + '/projectors.js')
 const extensions = require(__dirname + '/extensions.js')
 const _ = require('lodash')
@@ -16,22 +17,10 @@ class FieldInfo {
     this.unique = false
     this.min = undefined
     this.max = undefined
+    // methods
     this.validator = undefined
+    this.typeValidator = undefined
   }
-
-  /*
-  // TODO bad naming
-  validator() {
-    let validator = undefined
-    if(this.array) {
-      validator = validators.get('array')
-    }
-    else {
-      validator = validators.get(this.type, this.namespace)
-    }
-    return validator
-  }
-  */
 
   projector() {
     let projector = undefined
@@ -115,12 +104,13 @@ class FieldInfo {
       fi.max = Number(_.trimLeft(matches[0], '<'));
     }
 
-    // the validator
+    // the validators
+    fi.typeValidator = validators.get(fi.type, fi.namespace)
     if(fi.array) {
-      fi.validator = validators.get('array')
+      fi.validator = arrayValidator.create(fi)
     }
     else {
-      fi.validator = validators.get(fi.type, fi.namespace)
+      fi.validator = fi.typeValidator
     }
     
     // done
@@ -129,5 +119,5 @@ class FieldInfo {
 }
 
 // exports
-module.exports = FieldInfo;
+module.exports = FieldInfo
 

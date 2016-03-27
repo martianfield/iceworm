@@ -6,7 +6,6 @@ const validators = {
   float:require(__dirname + '/validators/float-validator.js'),
   email:require(__dirname + '/validators/email-validator.js'),
   bool:require(__dirname + '/validators/bool-validator.js'),
-  array:require(__dirname + '/validators/array-validator.js'),
   missing:require(__dirname + '/validators/missing.js')
 }
 const extensions = require(__dirname + '/extensions.js')
