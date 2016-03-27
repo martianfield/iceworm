@@ -9,9 +9,7 @@ module.exports = (obj, documentSchema, options) => {
 
   documentSchema.fields.forEach((fi) => {
     
-    //let validator = fi.validator() // fi.array ? validators.get('array') : fi.validator()
-
-    let result = fi.validator(obj[fi.name], fi)
+    let result = fi.validate(obj[fi.name], fi)
 
     if(!result.valid) {
       result.errors.forEach(error => {

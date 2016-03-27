@@ -18,8 +18,8 @@ class FieldInfo {
     this.min = undefined
     this.max = undefined
     // methods
-    this.validator = undefined
-    this.typeValidator = undefined
+    this.validate = undefined
+    this.validateType = undefined
   }
 
   projector() {
@@ -104,13 +104,13 @@ class FieldInfo {
       fi.max = Number(_.trimLeft(matches[0], '<'));
     }
 
-    // the validators
-    fi.typeValidator = validators.get(fi.type, fi.namespace)
+    // the validator methods
+    fi.validateType = validators.get(fi.type, fi.namespace)
     if(fi.array) {
-      fi.validator = arrayValidator.create(fi)
+      fi.validate = arrayValidator.create(fi)
     }
     else {
-      fi.validator = fi.typeValidator
+      fi.validate = fi.validateType
     }
     
     // done
