@@ -16,22 +16,22 @@ class FieldInfo {
     this.unique = false
     this.min = undefined
     this.max = undefined
+    this.validator = undefined
   }
 
+  /*
   // TODO bad naming
   validator() {
-    let validator = validators.get(this.type, this.namespace)
-    /*
-    if(this.namespace === undefined) {
-      validator = validators[this.type]; // TODO if there is no validator of that type, we need to push an error
+    let validator = undefined
+    if(this.array) {
+      validator = validators.get('array')
     }
     else {
-      validator = extensions[this.namespace]
-        .validators[this.type]; // TODO if there is no extension of that namespace or validator of that type, we need to push an error
+      validator = validators.get(this.type, this.namespace)
     }
-    */
     return validator
   }
+  */
 
   projector() {
     let projector = undefined
@@ -115,6 +115,14 @@ class FieldInfo {
       fi.max = Number(_.trimLeft(matches[0], '<'));
     }
 
+    // the validator
+    if(fi.array) {
+      fi.validator = validators.get('array')
+    }
+    else {
+      fi.validator = validators.get(fi.type, fi.namespace)
+    }
+    
     // done
     return fi;
   }

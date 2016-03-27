@@ -8,11 +8,10 @@ module.exports = (obj, documentSchema, options) => {
   let errors = []
 
   documentSchema.fields.forEach((fi) => {
-    //let validator = fi.array ? validators.array : fi.validator()
+    
+    //let validator = fi.validator() // fi.array ? validators.get('array') : fi.validator()
 
-    let validator = fi.array ? validators.get('array') : fi.validator()
-
-    let result = validator(obj[fi.name], fi)
+    let result = fi.validator(obj[fi.name], fi)
 
     if(!result.valid) {
       result.errors.forEach(error => {

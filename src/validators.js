@@ -6,7 +6,8 @@ const validators = {
   float:require(__dirname + '/validators/float-validator.js'),
   email:require(__dirname + '/validators/email-validator.js'),
   bool:require(__dirname + '/validators/bool-validator.js'),
-  array:require(__dirname + '/validators/array-validator.js')
+  array:require(__dirname + '/validators/array-validator.js'),
+  missing:require(__dirname + '/validators/missing.js')
 }
 const extensions = require(__dirname + '/extensions.js')
 
@@ -14,14 +15,21 @@ const extensions = require(__dirname + '/extensions.js')
 const get = (type, namespace) => {
   let validator = undefined
   if(namespace === undefined) {
-    validator = validators[type]; // TODO if there is no validator of that type, we need to push an error
+    validator = validators[type]
   }
   else {
-    validator = extensions[namespace]
-      .validators[type]; // TODO if there is no extension of that namespace or validator of that type, we need to push an error
+    if(extensions[namespace] !== undefined) {
+      validator = extensions[namespace].validators[type]
+    }
   }
-  // TODO attempt to get the validator from the schema cache
+  // no validator found? return the 'missing' validator
+  if(validator === undefined) {
+    validator = validators.missing
+  }
+
+  // done
   return validator
+  // TODO attempt to get the validator from the schema cache
 }
 
 //module.exports = validators
