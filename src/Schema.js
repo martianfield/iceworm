@@ -26,16 +26,36 @@ module.exports = class Schema {
     return this.fields.find((item) => item.name.toLowerCase() === name.toLowerCase())
   }
 
+  /**
+   * Caches the schema if it the .name property is set.
+   * Returns 'true' if the schema was actually cached.
+   * @returns {boolean}
+   */
   cache() {
     if(this.name !== undefined) {
       cache.schemas[this.name] = this
+      return true
+    }
+    else {
+      return false
     }
   }
-  
+
+  /**
+   * Create a schema. If the the 'name' parameter is give, the schema is also cached.
+   * @param raw
+   * @param name
+   * @returns {Schema}
+   */
   static create(raw, name) {
     return new Schema(raw, name)
   }
 
+  /**
+   * Retrieve a schema from the cache
+   * @param name
+   * @returns {*}
+   */
   static fromCache(name) {
     if(cache.schemas.hasOwnProperty(name)) {
       return cache.schemas[name]
@@ -45,12 +65,18 @@ module.exports = class Schema {
     }
   }
 
+  /**
+   * Purges the schema cache
+   */
   static purgeCache() {
     cache.schemas = {}
   }
 
-  // TODO bad naming
-  static cached() {
+  /**
+   * Returns all cached schemas
+   * @returns {cache.schemas|{}}
+   */
+  static getCached() {
     return cache.schemas
   }
 

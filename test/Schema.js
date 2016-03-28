@@ -54,8 +54,8 @@ describe('Schema', () => {
     expect(iceworm.Schema.fromCache('person')).to.deep.equal(schema1)
     // assert that schema2 is NOT cached
     let schema2_cached = false
-    for(let schema in iceworm.Schema.cached()) {
-      if(iceworm.Schema.cached().hasOwnProperty(schema)) {
+    for(let schema in iceworm.Schema.getCached()) {
+      if(iceworm.Schema.getCached().hasOwnProperty(schema)) {
         if(iceworm.Schema.fromCache(schema) === schema2) {
           schema2_cached = true
         }
