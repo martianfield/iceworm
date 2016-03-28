@@ -35,10 +35,10 @@ describe('Schema', () => {
       married:'bool'
     }
     let schema = Schema.create(raw)
-    expect(schema.field('name').name).to.equal('name')
-    expect(schema.field('age').name).to.equal('age')
-    expect(schema.field('married').name).to.equal('married')
-    expect(schema.field('does-not-exist')).to.equal(undefined)
+    expect(schema.getFieldInfo('name').name).to.equal('name')
+    expect(schema.getFieldInfo('age').name).to.equal('age')
+    expect(schema.getFieldInfo('married').name).to.equal('married')
+    expect(schema.getFieldInfo('does-not-exist')).to.equal(undefined)
   })
 
   it('Caching', () => {

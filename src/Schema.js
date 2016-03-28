@@ -21,8 +21,12 @@ module.exports = class Schema {
     this.cache()
   }
 
-  // TODO bad naming
-  field(name) {
+  /**
+   * Returns the FieldInfo with the given name.
+   * @param name
+   * @returns {T}
+   */
+  getFieldInfo(name) {
     return this.fields.find((item) => item.name.toLowerCase() === name.toLowerCase())
   }
 
