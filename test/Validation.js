@@ -93,5 +93,5 @@ describe("Validation", () => {
     result.valid.should.equal(true)
   })
   
-  // Note: Validation of embedded types in EmbeddedTypes.js
+  // Note: Validation of embedded types in validation-embedded.js
 })
