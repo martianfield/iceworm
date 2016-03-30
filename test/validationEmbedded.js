@@ -4,14 +4,32 @@ const iceworm = require(__dirname + '/../index.js')
 const should = require('chai').should()
 const expect = require('chai').expect
 
+before(() => {
+  iceworm.Schema.create({a:'*string'}, 'inner')
+  iceworm.Schema.create({a:'string', b:'*inner'}, 'outer')
+})
 
 describe("Embedded Types Validation", () => {
   it("Required", () => {
     // arrange
-    let inner = iceworm.Schema.create({a:'*string'}, 'inner')
-    let outer = iceworm.Schema.create({a:'string', b:'*inner'})
+    let inner = iceworm.Schema.fromCache('inner')
+    let outer = iceworm.Schema.fromCache('outer')
     let obj_valid = {a:'a', b:{a:'a'}}
     let obj_invalid = {a:'a'}
+    // act
+    let result_valid = iceworm.validate(obj_valid, outer)
+    let result_invalid = iceworm.validate(obj_invalid, outer)
+    // assert
+    expect(result_valid.valid).to.equal(true)
+    expect(result_invalid.valid).to.equal(false)
+  })
+
+  it("Embedded Has Required", () => {
+    // arrange
+    let inner = iceworm.Schema.fromCache('inner')
+    let outer = iceworm.Schema.fromCache('outer')
+    let obj_valid = {a:'a', b:{a:'a'}}
+    let obj_invalid = {a:'a', b:{}}
     // act
     let result_valid = iceworm.validate(obj_valid, outer)
     let result_invalid = iceworm.validate(obj_invalid, outer)
