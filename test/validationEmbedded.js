@@ -7,6 +7,7 @@ const expect = require('chai').expect
 before(() => {
   iceworm.Schema.create({a:'*string'}, 'inner')
   iceworm.Schema.create({a:'string', b:'*inner'}, 'outer')
+  iceworm.Schema.create({a:'string', b:'*inner[]', 'outer_array'})
 })
 
 describe("Embedded Types Validation", () => {
@@ -30,6 +31,20 @@ describe("Embedded Types Validation", () => {
     let outer = iceworm.Schema.fromCache('outer')
     let obj_valid = {a:'a', b:{a:'a'}}
     let obj_invalid = {a:'a', b:{}}
+    // act
+    let result_valid = iceworm.validate(obj_valid, outer)
+    let result_invalid = iceworm.validate(obj_invalid, outer)
+    // assert
+    expect(result_valid.valid).to.equal(true)
+    expect(result_invalid.valid).to.equal(false)
+  })
+  
+  it("Array of Embedded Type", () => {
+    // arrange
+    let inner = iceworm.Schema.fromCache('inner')
+    let outer = iceworm.Schema.fromCache('outer_array')
+    let obj_valid = {a:'a', b:[{a:'a'},{a:'b'}]}
+    let obj_invalid = {a:'a', b:[{something:'a'},{a:'b'}]}
     // act
     let result_valid = iceworm.validate(obj_valid, outer)
     let result_invalid = iceworm.validate(obj_invalid, outer)
