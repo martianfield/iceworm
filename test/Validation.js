@@ -93,5 +93,19 @@ describe("Validation", () => {
     result.valid.should.equal(true)
   })
   
+  it('Missing Validation for given Type', () => {
+    // arrange
+    let schema = iceworm.Schema.create({
+      a:'qwertzuio'
+    })
+    // act
+    let result = iceworm.validate({}, schema)
+    // assert
+    result.valid.should.equal(false)
+    result.errors[0].reason.should.equal('missing')
+  })
+  
+  
+  
   // Note: Validation of embedded types in validation-embedded.js
 })

@@ -3,6 +3,7 @@ const validators = require(__dirname + '/validators.js')
 const merge = require('setthings').merge
 
 module.exports = (obj, documentSchema, options) => {
+  // TODO make sure options is in the documentation ... also, document it here
   options = merge(options, {ignoreRequired:false})
 
   let errors = []

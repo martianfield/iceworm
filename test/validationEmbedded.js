@@ -7,7 +7,7 @@ const expect = require('chai').expect
 before(() => {
   iceworm.Schema.create({a:'*string'}, 'inner')
   iceworm.Schema.create({a:'string', b:'*inner'}, 'outer')
-  iceworm.Schema.create({a:'string', b:'*inner[]', 'outer_array'})
+  iceworm.Schema.create({a:'string', b:'*inner[]'}, 'outer_array')
 })
 
 describe("Embedded Types Validation", () => {
