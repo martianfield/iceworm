@@ -1,7 +1,9 @@
 'use strict'
 
 const FieldInfo = require(__dirname + '/FieldInfo.js')
+const validate = require(__dirname + '/validate.js')
 const cache = { schemas:{}}
+
 
 module.exports = class Schema {
   constructor(raw, name) {
@@ -13,7 +15,7 @@ module.exports = class Schema {
     // create field infos
     for(let prop in this.raw) {
       if(this.raw.hasOwnProperty(prop)) {
-        this.fields.push(FieldInfo.create(prop, this.raw[prop], this.embedded))
+        this.fields.push(FieldInfo.create(prop, this.raw[prop]))
       }
     }
 
@@ -91,4 +93,5 @@ module.exports = class Schema {
 
 }
 
-// TODO get rid of the static create method and make it a module function instead
+// TODO get rid of the static methods and make them module functions instead
+// TODO make validate a function of Schema ... note that we also use validate.js to get a closured validation method for embedded types

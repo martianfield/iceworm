@@ -14,7 +14,7 @@ const projectors = require(__dirname + '/src/projectors.js');
 const extensions = require(__dirname + '/src/extensions.js');
 
 module.exports = {
-  validate: validate,
+  validate: validate.validate,
   project: project,
   validators: validators,
   projectors: projectors,

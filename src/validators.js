@@ -9,7 +9,8 @@ const validators = {
   missing:require(__dirname + '/validators/missing.js')
 }
 const extensions = require(__dirname + '/extensions.js')
-
+const Schema = require(__dirname + '/Schema.js')
+const validate = require(__dirname + '/validate.js')
 
 const get = (type, namespace) => {
   let validator = undefined
@@ -21,14 +22,20 @@ const get = (type, namespace) => {
       validator = extensions[namespace].validators[type]
     }
   }
-  // no validator found? return the 'missing' validator
+  // no validator found yet? embedded type?
   if(validator === undefined) {
-    validator = validators.missing
+    let schema = Schema.fromCache(type)
+    if(schema !== undefined) {
+      validator = validate.create(schema, {})
+    }
+    else {
+      // still no validator found? return the 'missing' validator
+      validator = validators.missing
+    }
   }
 
   // done
   return validator
-  // TODO attempt to get the validator from the schema cache
 }
 
 //module.exports = validators

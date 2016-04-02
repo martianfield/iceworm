@@ -15,7 +15,7 @@ module.exports = (obj, schema) => {
     documentSchema = Schema.create(schema)
   }
   //let documentSchema = Schema.create(rawDocumentSchema);
-  let validationResult = validate(obj, documentSchema);
+  let validationResult = validate.validate(obj, documentSchema);
   let projectResult = project(obj, documentSchema);
 
   return {

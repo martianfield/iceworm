@@ -11,6 +11,10 @@ before(() => {
 })
 
 describe("Embedded Types Validation", () => {
+  /**
+   * if an embedded type is marked as required, validation should check if the object
+   * that is validated contains the required embedded document
+   */
   it("Required", () => {
     // arrange
     let inner = iceworm.Schema.fromCache('inner')
@@ -54,7 +58,7 @@ describe("Embedded Types Validation", () => {
   })
 })
 
-
+// TODO if the inner type is not cached (e.g. not yet created, no name given) when the outer is created, we run into issues ... need to handle this gracefully
 
 /*
  // arrange: create a schema to embed, and a schema having the embedded schema
