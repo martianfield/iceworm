@@ -7,16 +7,6 @@ const Schema = iceworm.Schema
 const cache = iceworm.cache
 
 describe('Schema', () => {
-  it('Schema.create() vs new Schema()', () => {
-    let raw = {
-      name:'*string>10',
-      age:'int',
-      married:'bool'
-    }
-    let schema1 = Schema.create(raw)
-    let schema2 = new Schema(raw)
-    schema1.should.deep.equal(schema2)
-  })
 
   it('Fields count', () => {
     let raw = {

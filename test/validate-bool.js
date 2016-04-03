@@ -4,19 +4,20 @@ const expect = require('chai').expect;
 const iceworm = require(__dirname + '/../index.js');
 const FieldInfo = iceworm.FieldInfo;
 
-describe('String Validator', () => {
+describe('Bool Validator', () => {
   it('Required (undefined)', () => {
-    let fieldInfo = FieldInfo.create('', "*bool");
-    let validation = iceworm.validators.get('bool')(undefined, fieldInfo);
-    validation.valid.should.equal(false);
-    validation.errors.length.should.equal(1);
-    validation.errors[0].reason.should.equal("required");
-  });
+    let fieldInfo = FieldInfo.create('', "*bool")
+    let result = fieldInfo.validate(undefined)
+    result.valid.should.equal(false)
+    result.errors.length.should.equal(1)
+    result.errors[0].reason.should.equal("required")
+  })
+
   it('Required (null)', () => {
-    let fieldInfo = FieldInfo.create('', "*bool");
-    let validation = iceworm.validators.get('bool')(null, fieldInfo);
-    validation.valid.should.equal(false);
-    validation.errors.length.should.equal(1);
-    validation.errors[0].reason.should.equal("required");
-  });
-});
+    let fieldInfo = FieldInfo.create('', "*bool")
+    let result = fieldInfo.validate(null)
+    result.valid.should.equal(false)
+    result.errors.length.should.equal(1)
+    result.errors[0].reason.should.equal("required")
+  })
+})

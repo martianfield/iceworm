@@ -12,19 +12,21 @@ const extensions = require(__dirname + '/extensions.js')
 const Schema = require(__dirname + '/Schema.js')
 const validate = require(__dirname + '/validate.js')
 
-const get = (type, namespace) => {
+const get = (fieldInfo) => {
   let validator = undefined
-  if(namespace === undefined) {
-    validator = validators[type]
+  if(fieldInfo.namespace === undefined) {
+    if(validators.hasOwnProperty(fieldInfo.type)) {
+      validator = validators[fieldInfo.type].create(fieldInfo)
+    }
   }
   else {
-    if(extensions[namespace] !== undefined) {
-      validator = extensions[namespace].validators[type]
+    if(extensions[fieldInfo.namespace] !== undefined) {
+      validator = extensions[fieldInfo.namespace].validators[fieldInfo.type]
     }
   }
   // no validator found yet? embedded type?
   if(validator === undefined) {
-    let schema = Schema.fromCache(type)
+    let schema = Schema.fromCache(fieldInfo.type)
     if(schema !== undefined) {
       validator = validate.create(schema, {})
     }

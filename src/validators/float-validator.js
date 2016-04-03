@@ -1,38 +1,42 @@
 'use strict';
 
-module.exports = (value, fieldSchema) => {
-  let errors = [];
+function create(fieldInfo) {
+  return (value) => {
+    let errors = [];
 
-  if(value === undefined || value === null) {
-    if(fieldSchema.required) {
-      errors.push({message:'value not provided', reason:'required'});
-    }
-  }
-  else {
-    if(isNaN(value)) {
-      errors.push({message:'not a number', reason:'type'});
-    }
-    else if(typeof value === 'boolean') {
-      errors.push({message:'not a number', reason:'type'})
+    if(value === undefined || value === null) {
+      if(fieldInfo.required) {
+        errors.push({message:'value not provided', reason:'required'});
+      }
     }
     else {
-      value = parseFloat(value);
-
-      if(fieldSchema.min) {
-        if(value < fieldSchema.min) {
-          errors.push({message:'value too small', reason:'min'});
-        }
+      if(isNaN(value)) {
+        errors.push({message:'not a number', reason:'type'});
       }
-      if(fieldSchema.max) {
-        if(value >= fieldSchema.max) {
-          errors.push({message:'value too large', reason:'max'});
+      else if(typeof value === 'boolean') {
+        errors.push({message:'not a number', reason:'type'})
+      }
+      else {
+        value = parseFloat(value);
+
+        if(fieldInfo.min) {
+          if(value < fieldInfo.min) {
+            errors.push({message:'value too small', reason:'min'});
+          }
+        }
+        if(fieldInfo.max) {
+          if(value >= fieldInfo.max) {
+            errors.push({message:'value too large', reason:'max'});
+          }
         }
       }
     }
-  }
 
-  return {
-    valid: errors.length === 0,
-    errors:errors
+    return {
+      valid: errors.length === 0,
+      errors:errors
+    }
   }
 }
+
+module.exports.create = create

@@ -108,7 +108,7 @@ const create = (name, definition) => {
   }
 
   // the validator methods
-  fi.validateType = validators.get(fi.type, fi.namespace)
+  fi.validateType = validators.get(fi)
   if(fi.array) {
     fi.validate = arrayValidator.create(fi)
   }
