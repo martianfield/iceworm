@@ -39,8 +39,8 @@ describe("FieldInfo", () => {
 
     it('Required', () => {
       // TODO we are not covering all possible combinations here
-      FieldInfo.create('', '*type[]').required.should.equal(true);
-      FieldInfo.create('', 'type[]').required.should.equal(false);
+      FieldInfo.create('', '*string[]').required.should.equal(true);
+      FieldInfo.create('', 'string[]').required.should.equal(false);
     })
 
     it('Hidden', () => {

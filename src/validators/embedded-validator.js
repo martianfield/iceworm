@@ -5,6 +5,7 @@ const Schema = require(__dirname + '/../Schema')
 
 function create(fieldInfo, options) {
   // do we have the required document schema in cache? if not, we cannot create a validator function
+  // TODO BUG this is called for 'string' type ... why?
   let documentSchema = Schema.fromCache(fieldInfo.type)
   if(documentSchema === undefined) {
     return undefined

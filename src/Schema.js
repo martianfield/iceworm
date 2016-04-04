@@ -2,7 +2,8 @@
 
 const FieldInfo = require(__dirname + '/FieldInfo.js')
 const validate = require(__dirname + '/validate.js')
-const cache = { schemas:{}}
+const cache = require(__dirname + '/cache.js')
+const setthings = require('setthings')
 
 
 module.exports = class Schema {
@@ -44,6 +45,36 @@ module.exports = class Schema {
     }
     else {
       return false
+    }
+  }
+
+  validate (obj, options) {
+    // TODO make sure options is in the documentation ... also, document it here
+    options = setthings.merge(options, {ignoreRequired: false})
+
+    let errors = []
+
+    this.fields.forEach((fi) => {
+
+      let result = fi.validate(obj[fi.name], fi)
+
+      if (!result.valid) {
+        result.errors.forEach(error => {
+          if (error.reason === 'required' && options.ignoreRequired) {
+            return
+          }
+          errors.push({
+            field: fi.name,
+            message: error.message,
+            reason: error.reason
+          })
+        })
+      }
+    })
+
+    return {
+      valid: errors.length === 0,
+      errors: errors
     }
   }
 

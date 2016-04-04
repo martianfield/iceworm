@@ -2,9 +2,11 @@
 
 const validators = require(__dirname + '/validators.js')
 const merge = require('setthings').merge
+const Schema = require(__dirname + '/Schema')
 
 // TODO make validate part of Schema ... then do schema.validate(obj, options) in here ... or move the 'static' method to Schema for good and drop this file
 function validate (obj, documentSchema, options) {
+  documentSchema.validate(obj, options)
   // TODO make sure options is in the documentation ... also, document it here
   options = merge(options, {ignoreRequired:false})
 

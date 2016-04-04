@@ -4,11 +4,6 @@ const iceworm = require(__dirname + '/../index.js')
 const should = require('chai').should()
 const expect = require('chai').expect
 
-before(() => {
-  iceworm.Schema.create({a:'*string'}, 'inner')
-  iceworm.Schema.create({a:'string', b:'*inner'}, 'outer')
-  iceworm.Schema.create({a:'string', b:'*inner[]'}, 'outer_array')
-})
 
 describe("Embedded Types Validation", () => {
   /**
@@ -31,13 +26,15 @@ describe("Embedded Types Validation", () => {
 
   it("Embedded Has Required", () => {
     // arrange
+    iceworm.Schema.create({a:'*string'}, 'inner')
+    iceworm.Schema.create({a:'string', b:'*inner'}, 'outer')
     let inner = iceworm.Schema.fromCache('inner')
     let outer = iceworm.Schema.fromCache('outer')
     let obj_valid = {a:'a', b:{a:'a'}}
     let obj_invalid = {a:'a', b:{}}
     // act
-    let result_valid = iceworm.validate(obj_valid, outer)
-    let result_invalid = iceworm.validate(obj_invalid, outer)
+    let result_valid = outer.validate(obj_valid)
+    let result_invalid = outer.validate(obj_invalid)
     // assert
     expect(result_valid.valid).to.equal(true)
     expect(result_invalid.valid).to.equal(false)
@@ -45,13 +42,15 @@ describe("Embedded Types Validation", () => {
   
   it("Array of Embedded Type", () => {
     // arrange
+    iceworm.Schema.create({a:'*string'}, 'inner')
+    iceworm.Schema.create({a:'string', b:'*inner[]'}, 'outer_array')
     let inner = iceworm.Schema.fromCache('inner')
-    let outer = iceworm.Schema.fromCache('outer_array')
+    let outer_array = iceworm.Schema.fromCache('outer_array')
     let obj_valid = {a:'a', b:[{a:'a'},{a:'b'}]}
     let obj_invalid = {a:'a', b:[{something:'a'},{a:'b'}]}
     // act
-    let result_valid = iceworm.validate(obj_valid, outer)
-    let result_invalid = iceworm.validate(obj_invalid, outer)
+    let result_valid = outer_array.validate(obj_valid)
+    let result_invalid = outer_array.validate(obj_invalid)
     // assert
     expect(result_valid.valid).to.equal(true)
     expect(result_invalid.valid).to.equal(false)
