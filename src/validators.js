@@ -8,6 +8,7 @@ const validators = {
   bool:require(__dirname + '/validators/bool-validator.js'),
   missing:require(__dirname + '/validators/missing.js')
 }
+const embedded = require(__dirname + '/validators/embedded-validator.js')
 const extensions = require(__dirname + '/extensions.js')
 const Schema = require(__dirname + '/Schema.js')
 const validate = require(__dirname + '/validate.js')
@@ -26,16 +27,12 @@ const get = (fieldInfo) => {
   }
   // no validator found yet? embedded type?
   if(validator === undefined) {
-    let schema = Schema.fromCache(fieldInfo.type)
-    if(schema !== undefined) {
-      validator = validate.create(schema, {})
-    }
-    else {
-      // still no validator found? return the 'missing' validator
-      validator = validators.missing
-    }
+    validator = embedded.create(fieldInfo)
   }
-
+  // still no validator found ... well, there is none then
+  if(validator === undefined) {
+    validator = validators.missing
+  }
   // done
   return validator
 }

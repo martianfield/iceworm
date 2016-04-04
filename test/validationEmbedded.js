@@ -17,13 +17,13 @@ describe("Embedded Types Validation", () => {
    */
   it("Required", () => {
     // arrange
-    let inner = iceworm.Schema.fromCache('inner')
-    let outer = iceworm.Schema.fromCache('outer')
-    let obj_valid = {a:'a', b:{a:'a'}}
-    let obj_invalid = {a:'a'}
+    let book = iceworm.Schema.create({title:'*string'}, 'book')
+    let author = iceworm.Schema.create({name:'*string', book:'*book'}, 'author')
+    let obj_valid = {name:'Charles Dickens', book:{title:'Great Expectations'}}
+    let obj_invalid = {name:'Charles Dickens'}
     // act
-    let result_valid = iceworm.validate(obj_valid, outer)
-    let result_invalid = iceworm.validate(obj_invalid, outer)
+    let result_valid = iceworm.validate(obj_valid, author)
+    let result_invalid = iceworm.validate(obj_invalid, author)
     // assert
     expect(result_valid.valid).to.equal(true)
     expect(result_invalid.valid).to.equal(false)
