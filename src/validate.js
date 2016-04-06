@@ -1,10 +1,6 @@
 'use strict'
 
-const validators = require(__dirname + '/validators.js')
-const merge = require('setthings').merge
-const Schema = require(__dirname + '/Schema')
-
-// TODO this is all that there is left of this file ... might as well drop it
+// TODO this is all that there is left of this file ... might as well make it part of Schema.js
 function validate(obj, documentSchema, options) {
   return documentSchema.validate(obj, options)
 }
